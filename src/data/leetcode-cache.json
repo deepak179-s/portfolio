@@ -1,0 +1,61 @@
+{
+  "userData": {
+    "solvedProblem": 0,
+    "easySolved": 0,
+    "mediumSolved": 0,
+    "hardSolved": 0,
+    "totalSubmissionNum": [
+      {
+        "difficulty": "All",
+        "count": 0,
+        "submissions": 0
+      },
+      {
+        "difficulty": "Easy",
+        "count": 0,
+        "submissions": 0
+      },
+      {
+        "difficulty": "Medium",
+        "count": 0,
+        "submissions": 0
+      },
+      {
+        "difficulty": "Hard",
+        "count": 0,
+        "submissions": 0
+      }
+    ],
+    "acSubmissionNum": [
+      {
+        "difficulty": "All",
+        "count": 0,
+        "submissions": 0
+      },
+      {
+        "difficulty": "Easy",
+        "count": 0,
+        "submissions": 0
+      },
+      {
+        "difficulty": "Medium",
+        "count": 0,
+        "submissions": 0
+      },
+      {
+        "difficulty": "Hard",
+        "count": 0,
+        "submissions": 0
+      }
+    ]
+  },
+  "contestData": {
+    "contestParticipation": []
+  },
+  "calData": {
+    "activeYears": [],
+    "streak": 0,
+    "totalActiveDays": 0,
+    "submissionCalendar": "{}"
+  }
+}
