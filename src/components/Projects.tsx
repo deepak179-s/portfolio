@@ -43,9 +43,9 @@ const projects = [
             "Designed robust responsive interfaces with custom Light/Dark themes and glassmorphic styling",
         ],
         tech: ["Next.js", "React.js", "Node.js", "Express.js", "MongoDB", "TailwindCSS", "Google Gemini AI"],
-        github: "https://github.com/deepak179-s/Loan_assistant",
+        github: "https://github.com/deepak179-s/loan-assistant",
         live: "", 
-        image: "/quickshow.png",
+        image: "/loan-assistant.png",
     },
     {
         title: "BrightTrack",
@@ -59,7 +59,7 @@ const projects = [
         tech: ["Python", "Arduino", "C++"],
         github: "https://github.com/deepak179-s/BrightTrack",
         live: "",
-        image: "/splitr.png",
+        image: "/brighttrack.png",
     }
 ];
 
