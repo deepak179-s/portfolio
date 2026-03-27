@@ -45,7 +45,10 @@ const projects = [
         tech: ["Next.js", "React.js", "Node.js", "Express.js", "MongoDB", "TailwindCSS", "Google Gemini AI"],
         github: "https://github.com/deepak179-s/loan-assistant",
         live: "", 
-        image: "/loan-assistant.png",
+        image: {
+            light: "/loan-assistant_light.png",
+            dark: "/loan-assistant_dark.png"
+        },
     },
     {
         title: "BrightTrack",
@@ -59,7 +62,7 @@ const projects = [
         tech: ["Python", "Arduino", "C++"],
         github: "https://github.com/deepak179-s/BrightTrack",
         live: "",
-        image: "/brighttrack.png",
+        image: "/splitr.png", // placeholder
     }
 ];
 
@@ -140,12 +143,29 @@ export default function Projects() {
                         >
                             {/* Project Image */}
                             <div className="relative w-full aspect-[16/10] overflow-hidden bg-background">
-                                <Image
-                                    src={project.image}
-                                    alt={`${project.title} preview`}
-                                    fill
-                                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                                />
+                                {typeof project.image === 'string' ? (
+                                    <Image
+                                        src={project.image}
+                                        alt={`${project.title} preview`}
+                                        fill
+                                        className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                ) : (
+                                    <>
+                                        <Image
+                                            src={project.image.light}
+                                            alt={`${project.title} preview light`}
+                                            fill
+                                            className="object-cover object-top group-hover:scale-105 transition-transform duration-500 dark:hidden"
+                                        />
+                                        <Image
+                                            src={project.image.dark}
+                                            alt={`${project.title} preview dark`}
+                                            fill
+                                            className="object-cover object-top group-hover:scale-105 transition-transform duration-500 hidden dark:block"
+                                        />
+                                    </>
+                                )}
                             </div>
 
                             {/* Content */}
