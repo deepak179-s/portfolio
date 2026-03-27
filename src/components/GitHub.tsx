@@ -7,9 +7,51 @@ import { GitHubCalendar } from "react-github-calendar";
 
 export default function GitHub() {
     const [mounted, setMounted] = useState(false);
+    const [stats, setStats] = useState({ repos: 0, stars: 0, contributions: 0 });
 
     useEffect(() => {
         setMounted(true);
+
+        const fetchGitHubStats = async () => {
+            try {
+                const username = "deepak179-s";
+                
+                // Fetch basic user data (repos)
+                const userRes = await fetch(`https://api.github.com/users/${username}`);
+                const userData = await userRes.json();
+                
+                // Fetch repositories (stars)
+                const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+                const reposData = await reposRes.json();
+                let totalStars = 0;
+                if (Array.isArray(reposData)) {
+                    totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+                }
+
+                // Fetch contributions
+                const contribRes = await fetch(`https://github-contributions-api.deno.dev/${username}.json`);
+                if (contribRes.ok) {
+                    const contribData = await contribRes.json();
+                    const totalContribs = contribData?.totalContributions || 0;
+                    
+                    setStats({
+                        repos: userData.public_repos || 0,
+                        stars: totalStars,
+                        contributions: totalContribs
+                    });
+                } else {
+                    setStats({
+                        repos: userData.public_repos || 0,
+                        stars: totalStars,
+                        contributions: 0
+                    });
+                }
+            } catch (error) {
+                console.error("Failed to fetch GitHub stats:", error);
+            }
+        };
+
+        fetchGitHubStats();
     }, []);
 
     const greenTheme = {
@@ -82,17 +124,17 @@ export default function GitHub() {
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
                                     <Code2 className="w-6 h-6 text-accent mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">2+</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.repos > 0 ? stats.repos : "2+"}</p>
                                     <p className="text-xs text-text-secondary mt-1">Repositories</p>
                                 </div>
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
                                     <Star className="w-6 h-6 text-yellow-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">1+</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.stars > 0 ? stats.stars : "1+"}</p>
                                     <p className="text-xs text-text-secondary mt-1">Stars Earned</p>
                                 </div>
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
                                     <GitFork className="w-6 h-6 text-green-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">50+</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.contributions > 0 ? stats.contributions : "50+"}</p>
                                     <p className="text-xs text-text-secondary mt-1">Contributions</p>
                                 </div>
                             </div>
