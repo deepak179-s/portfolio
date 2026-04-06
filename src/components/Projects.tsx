@@ -30,6 +30,9 @@ const techIcons: Record<string, string> = {
     "Python": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
     "Arduino": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg",
     "C++": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
+    "HTML5": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
+    "CSS3": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
+    "Electron": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg",
 };
 
 const projects = [
@@ -63,6 +66,20 @@ const projects = [
         github: "https://github.com/deepak179-s/BrightTrack",
         live: "",
         image: "/splitr.png", // placeholder
+    },
+    {
+        title: "ThreadLab",
+        subtitle: "Multi-threaded Application Simulator",
+        systemLine: "An interactive, real-time simulator for threading models, CPU scheduling, and deadlock handling.",
+        bullets: [
+            "Engineered a seamless cross-platform experience functioning both as an Electron desktop app and a static web app",
+            "Simulated complex OS concepts including synchronization primitives and process scheduling",
+            "Deployed as a serverless static web application on Vercel ensuring high availability",
+        ],
+        tech: ["JavaScript", "HTML5", "CSS3", "Electron"],
+        github: "https://github.com/deepak179-s/ThreadLab",
+        live: "",
+        image: "/ThreadLab.png",
     }
 ];
 
