@@ -95,7 +95,7 @@ export default function Projects({ projects = [] }: ProjectsProps) {
         tech: p.tech_stack || [],
         github: p.github_url || "",
         live: p.demo_url || "",
-        image: p.image_url || "/splitr.png"
+        image: (p.image_url || "/splitr.png") as string | { light: string; dark: string }
     }));
 
     return (
