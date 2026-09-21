@@ -9,9 +9,11 @@ import {
     Linkedin,
     MapPin,
     CheckCircle2,
+    Link as LinkIcon
 } from "lucide-react";
+import type { SocialLink } from "@/types";
 
-const socials = [
+const defaultSocials = [
     {
         name: "Email",
         value: "deepak17943@gmail.com",
@@ -41,12 +43,63 @@ const socials = [
     },
 ];
 
-export default function Contact() {
+const getPlatformDetails = (platform: string, url: string) => {
+    const p = platform.toLowerCase();
+    let name = platform;
+    let value = url.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, ''); // simple url formatter
+    let href = url;
+    let icon = LinkIcon;
+    let color = "text-accent";
+    let bg = "bg-accent/10";
+    let borderHover = "hover:border-accent/50";
+
+    if (p.includes("github")) {
+        name = "GitHub";
+        icon = Github;
+        color = "text-gray-700 dark:text-gray-300";
+        bg = "bg-gray-500/10";
+        borderHover = "hover:border-gray-500/50";
+        value = url.split("github.com/")[1] || value;
+    } else if (p.includes("linkedin")) {
+        name = "LinkedIn";
+        icon = Linkedin;
+        color = "text-blue-600";
+        bg = "bg-blue-500/10";
+        borderHover = "hover:border-blue-600/50";
+        value = url.split("in/")[1]?.replace(/\/$/, '') || value;
+    } else if (p.includes("email") || p.includes("mail")) {
+        name = "Email";
+        icon = Mail;
+        color = "text-red-500";
+        bg = "bg-red-500/10";
+        borderHover = "hover:border-red-500/50";
+        href = url.startsWith("mailto:") ? url : `mailto:${url}`;
+        value = url.replace("mailto:", "");
+    }
+
+    return { name, value, href, icon, color, bg, borderHover };
+};
+
+interface ContactProps {
+    socialLinks?: SocialLink[];
+    email?: string;
+}
+
+export default function Contact({ socialLinks = [], email }: ContactProps) {
     const formRef = useRef<HTMLFormElement>(null);
     const [formData, setFormData] = useState({ name: "", email: "", message: "" });
     const [submitted, setSubmitted] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState("");
+
+    const displaySocials = socialLinks && socialLinks.length > 0 
+        ? socialLinks.map(link => getPlatformDetails(link.platform, link.url))
+        : defaultSocials;
+
+    // Add email if provided and not already in socials
+    if (email && !displaySocials.find(s => s.name === "Email")) {
+        displaySocials.unshift(getPlatformDetails("Email", email));
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -118,7 +171,7 @@ export default function Contact() {
                             </div>
 
                             <div className="grid gap-3 flex-grow">
-                                {socials.map((social, idx) => (
+                                {displaySocials.map((social, idx) => (
                                     <motion.a
                                         key={social.name}
                                         href={social.href}

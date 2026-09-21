@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
+import type { Experience as ExperienceType } from "@/types";
 
-const experiences = [
+const defaultExperiences = [
     {
         role: "SDE Intern",
         company: "Graphketing",
@@ -26,7 +27,22 @@ const experiences = [
     },
 ];
 
-export default function Experience() {
+interface ExperienceProps {
+    experience?: ExperienceType[];
+}
+
+export default function Experience({ experience = [] }: ExperienceProps) {
+    const displayExperiences = experience && experience.length > 0 ? experience.map(exp => ({
+        role: exp.role,
+        company: exp.company,
+        badge: "Experience", // Default since it's not in DB
+        period: exp.duration,
+        location: "On-site / Remote", // Default since it's not in DB
+        points: exp.description ? exp.description.split("\n").filter(p => p.trim() !== "") : [],
+        tech: [], // Default empty
+        logo: exp.company.charAt(0).toUpperCase()
+    })) : defaultExperiences;
+
     return (
         <section id="experience" className="py-24 px-4 overflow-hidden">
             <div className="max-w-6xl mx-auto">
@@ -41,9 +57,9 @@ export default function Experience() {
                 </motion.div>
 
                 <div className="max-w-5xl mx-auto space-y-6">
-                    {experiences.map((exp, expIndex) => (
+                    {displayExperiences.map((exp, expIndex) => (
                         <motion.div
-                            key={exp.company}
+                            key={exp.company + expIndex}
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -76,9 +92,11 @@ export default function Experience() {
                                                     <h3 className="text-2xl font-bold text-text-primary group-hover:text-accent transition-colors">
                                                         {exp.company}
                                                     </h3>
-                                                    <span className="px-3 py-1 text-[11px] font-semibold text-blue-500 bg-blue-500/10 rounded-full border border-blue-500/20 uppercase tracking-wide">
-                                                        {exp.badge}
-                                                    </span>
+                                                    {exp.badge && (
+                                                        <span className="px-3 py-1 text-[11px] font-semibold text-blue-500 bg-blue-500/10 rounded-full border border-blue-500/20 uppercase tracking-wide">
+                                                            {exp.badge}
+                                                        </span>
+                                                    )}
                                                 </div>
                                                 <p className="text-lg font-medium text-text-secondary">{exp.role}</p>
                                             </div>
@@ -87,48 +105,52 @@ export default function Experience() {
                                                     <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
                                                     {exp.period}
                                                 </div>
-                                                <p>{exp.location}</p>
+                                                {exp.location && <p>{exp.location}</p>}
                                             </div>
                                         </div>
 
                                         {/* Technologies */}
-                                        <div className="mb-8">
-                                            <p className="text-sm font-semibold text-text-primary mb-3">Technologies Used</p>
-                                            <div className="flex flex-wrap items-center gap-3">
-                                                {exp.tech.map((t, i) => (
-                                                    <motion.div
-                                                        key={t.name}
-                                                        initial={{ opacity: 0, scale: 0.8 }}
-                                                        whileInView={{ opacity: 1, scale: 1 }}
-                                                        transition={{ duration: 0.3, delay: 0.2 + (i * 0.05) }}
-                                                        viewport={{ once: true }}
-                                                        className="inline-flex items-center gap-2 px-3 py-1.5 bg-background rounded-full border border-border 
-                                                         text-[13px] font-medium text-text-primary hover:border-accent/50 hover:shadow-md 
-                                                         hover:shadow-accent/5 hover:-translate-y-0.5 transition-all duration-300 cursor-default"
-                                                    >
-                                                        <span className="text-sm">{t.icon}</span>
-                                                        {t.name}
-                                                    </motion.div>
-                                                ))}
+                                        {exp.tech && exp.tech.length > 0 && (
+                                            <div className="mb-8">
+                                                <p className="text-sm font-semibold text-text-primary mb-3">Technologies Used</p>
+                                                <div className="flex flex-wrap items-center gap-3">
+                                                    {exp.tech.map((t, i) => (
+                                                        <motion.div
+                                                            key={t.name}
+                                                            initial={{ opacity: 0, scale: 0.8 }}
+                                                            whileInView={{ opacity: 1, scale: 1 }}
+                                                            transition={{ duration: 0.3, delay: 0.2 + (i * 0.05) }}
+                                                            viewport={{ once: true }}
+                                                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-background rounded-full border border-border 
+                                                             text-[13px] font-medium text-text-primary hover:border-accent/50 hover:shadow-md 
+                                                             hover:shadow-accent/5 hover:-translate-y-0.5 transition-all duration-300 cursor-default"
+                                                        >
+                                                            <span className="text-sm">{t.icon}</span>
+                                                            {t.name}
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
                                             </div>
-                                        </div>
+                                        )}
 
                                         {/* Points */}
-                                        <ul className="space-y-4">
-                                            {exp.points.map((point, i) => (
-                                                <motion.li 
-                                                    key={i} 
-                                                    initial={{ opacity: 0, x: -10 }}
-                                                    whileInView={{ opacity: 1, x: 0 }}
-                                                    transition={{ duration: 0.4, delay: 0.3 + (i * 0.1) }}
-                                                    viewport={{ once: true }}
-                                                    className="flex gap-3 text-sm text-text-secondary leading-relaxed group-hover:text-text-primary/90 transition-colors"
-                                                >
-                                                    <span className="text-accent mt-1.5 flex-shrink-0 text-[10px] transform group-hover:scale-125 transition-transform duration-300">●</span>
-                                                    {point}
-                                                </motion.li>
-                                            ))}
-                                        </ul>
+                                        {exp.points && exp.points.length > 0 && (
+                                            <ul className="space-y-4">
+                                                {exp.points.map((point, i) => (
+                                                    <motion.li 
+                                                        key={i} 
+                                                        initial={{ opacity: 0, x: -10 }}
+                                                        whileInView={{ opacity: 1, x: 0 }}
+                                                        transition={{ duration: 0.4, delay: 0.3 + (i * 0.1) }}
+                                                        viewport={{ once: true }}
+                                                        className="flex gap-3 text-sm text-text-secondary leading-relaxed group-hover:text-text-primary/90 transition-colors"
+                                                    >
+                                                        <span className="text-accent mt-1.5 flex-shrink-0 text-[10px] transform group-hover:scale-125 transition-transform duration-300">●</span>
+                                                        {point}
+                                                    </motion.li>
+                                                ))}
+                                            </ul>
+                                        )}
                                     </div>
                                 </div>
                             </div>

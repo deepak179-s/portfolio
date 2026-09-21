@@ -2,8 +2,13 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import type { Profile } from "@/types";
 
-export default function About() {
+interface AboutProps {
+    profile?: Profile | null;
+}
+
+export default function About({ profile }: AboutProps) {
     // Animation variants
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -19,6 +24,16 @@ export default function About() {
         hidden: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
     };
+
+    const name = profile?.name || "Deepak Kumar";
+    const profilePhoto = profile?.profile_photo_url || "/profile.jpg";
+    const aboutHtml = profile?.about || `
+        <p>B.Tech CSE student specializing in Machine Learning, Data Science, and predictive modeling.</p>
+        <p>Currently pursuing my education at LPU Jalandhar, where I focus on applying complex algorithms to real-world challenges.</p>
+        <p>I have hands-on experience building AI models using Python, deep learning frameworks, and advanced mathematical concepts, while also maintaining a strong foundation in Data Structures and Algorithms (DSA).</p>
+        <p>With knowledge in Java, C, C++, and Python, I am equipped to develop optimized and highly scalable intelligence and data processing applications.</p>
+        <p class="font-medium text-text-primary">Passionate about using data to make informed decisions and build smart, self-learning systems.</p>
+    `;
 
     return (
         <section id="about" className="py-24 px-4 overflow-hidden">
@@ -54,8 +69,8 @@ export default function About() {
                                 <div className="w-56 h-56 md:w-72 md:h-72 rounded-3xl overflow-hidden border-4 border-border bg-gradient-to-br from-indigo-100 to-blue-200 dark:from-slate-800 dark:to-slate-900 shadow-lg shrink-0 relative flex items-center justify-center group">
                                     <div className="absolute inset-0 bg-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10" />
                                     <Image
-                                        src="/profile.jpg"
-                                        alt="Deepak Kumar"
+                                        src={profilePhoto}
+                                        alt={name}
                                         fill
                                         className="object-cover transform group-hover:scale-110 transition-transform duration-500"
                                         unoptimized
@@ -72,27 +87,15 @@ export default function About() {
                                 viewport={{ once: true }}
                             >
                                 <motion.h3 variants={itemVariants} className="text-3xl font-bold text-text-primary mb-6 relative inline-block">
-                                    Deepak Kumar
+                                    {name}
                                     <span className="absolute -bottom-2 left-0 w-1/3 h-1 bg-accent rounded-full"></span>
                                 </motion.h3>
                                 
-                                <motion.div variants={itemVariants} className="space-y-4 text-[15px] sm:text-base text-text-secondary leading-relaxed mb-10">
-                                    <p>
-                                        B.Tech CSE student specializing in Machine Learning, Data Science, and predictive modeling.
-                                    </p>
-                                    <p>
-                                        Currently pursuing my education at LPU Jalandhar, where I focus on applying complex algorithms to real-world challenges. 
-                                    </p>
-                                    <p>
-                                        I have hands-on experience building AI models using Python, deep learning frameworks, and advanced mathematical concepts, while also maintaining a strong foundation in Data Structures and Algorithms (DSA).
-                                    </p>
-                                    <p>
-                                        With knowledge in Java, C, C++, and Python, I am equipped to develop optimized and highly scalable intelligence and data processing applications.
-                                    </p>
-                                    <p className="font-medium text-text-primary">
-                                        Passionate about using data to make informed decisions and build smart, self-learning systems.
-                                    </p>
-                                </motion.div>
+                                <motion.div 
+                                    variants={itemVariants} 
+                                    className="space-y-4 text-[15px] sm:text-base text-text-secondary leading-relaxed mb-10 about-content-html"
+                                    dangerouslySetInnerHTML={{ __html: aboutHtml }}
+                                />
 
                                 {/* Current Focus */}
                                 <motion.div variants={itemVariants} className="bg-background rounded-2xl p-6 border border-border/50 shadow-sm relative overflow-hidden group">

@@ -1,15 +1,47 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, FileText, ArrowDown } from "lucide-react";
+import { Github, Linkedin, Mail, FileText, ArrowDown, Link as LinkIcon, Twitter, Facebook, Instagram, Youtube } from "lucide-react";
+import type { Profile, SocialLink } from "@/types";
 
-const socials = [
-    { icon: Github, href: "https://github.com/deepak179-s", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/deepak179-s/", label: "LinkedIn" },
-    { icon: Mail, href: "mailto:deepak17943@gmail.com", label: "Email" },
-];
+interface HeroProps {
+    profile?: Profile | null;
+    socialLinks?: SocialLink[];
+}
 
-export default function Hero() {
+// Map platform strings to icons
+const getIcon = (platform: string) => {
+    const p = platform.toLowerCase();
+    if (p.includes("github")) return Github;
+    if (p.includes("linkedin")) return Linkedin;
+    if (p.includes("twitter") || p.includes("x")) return Twitter;
+    if (p.includes("facebook")) return Facebook;
+    if (p.includes("instagram")) return Instagram;
+    if (p.includes("youtube")) return Youtube;
+    if (p.includes("mail") || p.includes("email")) return Mail;
+    return LinkIcon;
+};
+
+export default function Hero({ profile, socialLinks = [] }: HeroProps) {
+    const name = profile?.name || "Deepak Kumar";
+    const bioText = profile?.bio || "I am a B.Tech CSE student specializing in Machine Learning and Data Science.";
+    const cvUrl = profile?.cv_url || "https://drive.google.com/file/d/1hjHBFBXq13E9bsxwfzi2lFCfSk4i-_eu/view?usp=sharing";
+
+    // Fallback socials if empty
+    const defaultSocials = [
+        { icon: Github, href: "https://github.com/deepak179-s", label: "GitHub" },
+        { icon: Linkedin, href: "https://www.linkedin.com/in/deepak179-s/", label: "LinkedIn" },
+        { icon: Mail, href: "mailto:deepak17943@gmail.com", label: "Email" },
+    ];
+
+    const displaySocials = socialLinks && socialLinks.length > 0 
+        ? socialLinks.map(link => ({
+            icon: getIcon(link.platform),
+            href: link.url,
+            label: link.platform
+        }))
+        : defaultSocials;
+
     return (
         <section
             id="hero"
@@ -43,7 +75,7 @@ export default function Hero() {
                 >
                     Hello, I&apos;m{" "}
                     <span className="bg-gradient-to-r from-accent to-blue-400 bg-clip-text text-transparent">
-                        Deepak Kumar
+                        {name.split(" ")[0]}
                     </span>{" "}
                     <motion.span
                         animate={{ rotate: [0, 14, -8, 14, -4, 10, 0] }}
@@ -61,9 +93,7 @@ export default function Hero() {
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="text-lg sm:text-xl font-semibold text-text-secondary mb-8"
                 >
-                    B.Tech CSE Student{" "}
-                    <span className="text-text-secondary/50">·</span>{" "}
-                    LPU Jalandhar
+                    {profile?.name ? name : "B.Tech CSE Student"}
                 </motion.p>
 
                 {/* Description — bold and confident */}
@@ -74,12 +104,7 @@ export default function Hero() {
                     className="mb-10 space-y-1"
                 >
                     <p className="text-base sm:text-lg font-semibold text-text-primary leading-relaxed">
-                        I am a B.Tech CSE student specializing in Machine Learning and Data Science.
-                    </p>
-                    <p className="text-base sm:text-lg font-medium text-text-secondary leading-relaxed">
-                        Focused on building{" "}
-                        <span className="text-accent font-semibold">intelligent systems</span>,
-                        solving complex problems with DSA, and creating impactful models.
+                        {bioText}
                     </p>
                 </motion.div>
 
@@ -100,7 +125,7 @@ export default function Hero() {
                         View Projects
                     </a>
                     <a
-                        href="https://drive.google.com/file/d/1hjHBFBXq13E9bsxwfzi2lFCfSk4i-_eu/view?usp=sharing"
+                        href={cvUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-7 py-3.5 bg-card text-text-primary font-semibold 
@@ -119,9 +144,9 @@ export default function Hero() {
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="flex items-center justify-center gap-3"
                 >
-                    {socials.map((social) => (
+                    {displaySocials.map((social, index) => (
                         <a
-                            key={social.label}
+                            key={index}
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"

@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Github, Globe } from "lucide-react";
 import Image from "next/image";
+import type { Project } from "@/types";
 
 /* ── tech icon map using devicon CDN ── */
 const techIcons: Record<string, string> = {
@@ -35,7 +36,7 @@ const techIcons: Record<string, string> = {
     "Electron": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg",
 };
 
-const projects = [
+const defaultProjects = [
     {
         title: "Loan Assistant",
         subtitle: "AI-Driven Financial Platform",
@@ -125,7 +126,23 @@ function TechPill({ name, index }: { name: string; index: number }) {
     );
 }
 
-export default function Projects() {
+interface ProjectsProps {
+    projects?: Project[];
+}
+
+export default function Projects({ projects = [] }: ProjectsProps) {
+    // Map db projects to component format if provided, else use defaults
+    const displayProjects = projects && projects.length > 0 ? projects.map(p => ({
+        title: p.title,
+        subtitle: "", // DB might not have subtitle, leave empty or parse from description
+        systemLine: p.description.split("\n")[0] || "",
+        bullets: p.description.split("\n").slice(1).filter(b => b.trim() !== ""),
+        tech: p.tech_stack || [],
+        github: p.github_url || "",
+        live: p.demo_url || "",
+        image: p.image_url || "/splitr.png"
+    })) : defaultProjects;
+
     return (
         <section id="projects" className="py-20 px-4 sm:px-6">
             <div className="max-w-6xl mx-auto">
@@ -150,9 +167,9 @@ export default function Projects() {
                     viewport={{ once: true }}
                     className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
-                    {projects.map((project) => (
+                    {displayProjects.map((project, idx) => (
                         <motion.div
-                            key={project.title}
+                            key={project.title + idx}
                             variants={cardVariant}
                             className="group bg-card rounded-2xl border border-border overflow-hidden
                          hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5 
@@ -193,7 +210,7 @@ export default function Projects() {
                                         <h3 className="text-xl font-bold text-text-primary group-hover:text-accent transition-colors">
                                             {project.title}
                                         </h3>
-                                        <p className="text-sm text-text-secondary mt-0.5">{project.subtitle}</p>
+                                        {project.subtitle && <p className="text-sm text-text-secondary mt-0.5">{project.subtitle}</p>}
                                     </div>
                                     <div className="flex items-center gap-2 flex-shrink-0">
                                         {project.live && (
@@ -208,38 +225,46 @@ export default function Projects() {
                                                 <Globe className="w-4 h-4" />
                                             </a>
                                         )}
-                                        <a
-                                            href={project.github}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="p-2 rounded-lg border border-border text-text-secondary 
+                                        {project.github && (
+                                            <a
+                                                href={project.github}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="p-2 rounded-lg border border-border text-text-secondary 
                                  hover:text-accent hover:border-accent/50 transition-all duration-200"
-                                            aria-label={`View ${project.title} on GitHub`}
-                                        >
-                                            <Github className="w-4 h-4" />
-                                        </a>
+                                                aria-label={`View ${project.title} on GitHub`}
+                                            >
+                                                <Github className="w-4 h-4" />
+                                            </a>
+                                        )}
                                     </div>
                                 </div>
 
                                 {/* System line + bullets */}
-                                <p className="text-sm text-text-primary font-medium leading-relaxed mb-2">
-                                    {project.systemLine}
-                                </p>
-                                <ul className="space-y-1 mb-4">
-                                    {project.bullets.map((bullet) => (
-                                        <li key={bullet} className="flex items-start gap-2 text-sm text-text-secondary leading-relaxed">
-                                            <span className="text-accent mt-1.5 text-[6px]">●</span>
-                                            {bullet}
-                                        </li>
-                                    ))}
-                                </ul>
+                                {project.systemLine && (
+                                    <p className="text-sm text-text-primary font-medium leading-relaxed mb-2">
+                                        {project.systemLine}
+                                    </p>
+                                )}
+                                {project.bullets && project.bullets.length > 0 && (
+                                    <ul className="space-y-1 mb-4">
+                                        {project.bullets.map((bullet, i) => (
+                                            <li key={i} className="flex items-start gap-2 text-sm text-text-secondary leading-relaxed">
+                                                <span className="text-accent mt-1.5 text-[6px]">●</span>
+                                                {bullet}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
 
                                 {/* Animated tech pills with logos */}
-                                <div className="flex flex-wrap gap-2">
-                                    {project.tech.map((t, i) => (
-                                        <TechPill key={t} name={t} index={i} />
-                                    ))}
-                                </div>
+                                {project.tech && project.tech.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mt-4">
+                                        {project.tech.map((t, i) => (
+                                            <TechPill key={t} name={t} index={i} />
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </motion.div>
                     ))}

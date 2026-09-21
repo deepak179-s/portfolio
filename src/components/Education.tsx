@@ -2,8 +2,9 @@
 
 import { motion } from "framer-motion";
 import { GraduationCap, Calendar, Award } from "lucide-react";
+import type { Education as EducationType } from "@/types";
 
-const educationData = [
+const defaultEducationData = [
     {
         degree: "Bachelor of Technology (CSE)",
         institution: "Lovely Professional University (LPU)",
@@ -25,7 +26,21 @@ const educationData = [
     }
 ];
 
-export default function Education() {
+interface EducationProps {
+    education?: EducationType[];
+}
+
+export default function Education({ education = [] }: EducationProps) {
+    const displayEducation = education && education.length > 0 ? education.map(edu => ({
+        degree: edu.degree,
+        institution: edu.institution,
+        period: edu.duration,
+        location: "Jalandhar, Punjab, India", // Default
+        description: edu.score ? `Score: ${edu.score}` : "",
+        achievements: [],
+        subjects: []
+    })) : defaultEducationData;
+
     return (
         <section id="education" className="py-24 px-4 overflow-hidden">
             <div className="max-w-6xl mx-auto">
@@ -45,9 +60,9 @@ export default function Education() {
                 </motion.div>
 
                 <div className="max-w-5xl mx-auto space-y-8">
-                    {educationData.map((edu, index) => (
+                    {displayEducation.map((edu, index) => (
                         <motion.div
-                            key={edu.degree}
+                            key={edu.degree + index}
                             initial={{ opacity: 0, scale: 0.95, y: 30 }}
                             whileInView={{ opacity: 1, scale: 1, y: 0 }}
                             viewport={{ once: true }}
@@ -65,49 +80,55 @@ export default function Education() {
                             </div>
                             
                             <p className="text-lg font-medium text-text-primary mb-1">{edu.institution}</p>
-                            <p className="text-sm text-text-secondary mb-6">{edu.location}</p>
+                            {edu.location && <p className="text-sm text-text-secondary mb-6">{edu.location}</p>}
                             
-                            <p className="text-sm text-text-secondary leading-relaxed mb-8 max-w-3xl">
-                                {edu.description}
-                            </p>
+                            {edu.description && (
+                                <p className="text-sm text-text-secondary leading-relaxed mb-8 max-w-3xl">
+                                    {edu.description}
+                                </p>
+                            )}
 
-                            <div className="mb-8">
-                                <p className="text-[15px] font-semibold text-text-primary mb-4">Key Achievements:</p>
-                                <ul className="space-y-3">
-                                    {edu.achievements.map((ach, i) => (
-                                        <motion.li 
-                                            key={i} 
-                                            initial={{ opacity: 0, x: -10 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ duration: 0.4, delay: 0.3 + (i * 0.1) }}
-                                            viewport={{ once: true }}
-                                            className="flex items-center gap-3 text-sm font-medium text-text-secondary group-hover:text-text-primary/90 transition-colors"
-                                        >
-                                            <Award className="w-4 h-4 text-text-secondary/70 group-hover:text-accent transition-colors" />
-                                            {ach}
-                                        </motion.li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            <div className="mt-8 pt-6 border-t border-border/50">
-                                <div className="flex flex-wrap items-center gap-3">
-                                    {edu.subjects.map((sub, i) => (
-                                        <motion.div
-                                            key={i}
-                                            initial={{ opacity: 0, scale: 0.8 }}
-                                            whileInView={{ opacity: 1, scale: 1 }}
-                                            transition={{ duration: 0.3, delay: 0.2 + (i * 0.05) }}
-                                            viewport={{ once: true }}
-                                            className="inline-flex items-center gap-2 px-3 py-1.5 bg-background rounded-lg border border-border 
-                                             text-xs font-semibold text-text-primary hover:border-accent/40 shadow-sm transition-all duration-300 cursor-default"
-                                        >
-                                            <span className="text-base leading-none">{sub.icon}</span>
-                                            {sub.name}
-                                        </motion.div>
-                                    ))}
+                            {edu.achievements && edu.achievements.length > 0 && (
+                                <div className="mb-8">
+                                    <p className="text-[15px] font-semibold text-text-primary mb-4">Key Achievements:</p>
+                                    <ul className="space-y-3">
+                                        {edu.achievements.map((ach, i) => (
+                                            <motion.li 
+                                                key={i} 
+                                                initial={{ opacity: 0, x: -10 }}
+                                                whileInView={{ opacity: 1, x: 0 }}
+                                                transition={{ duration: 0.4, delay: 0.3 + (i * 0.1) }}
+                                                viewport={{ once: true }}
+                                                className="flex items-center gap-3 text-sm font-medium text-text-secondary group-hover:text-text-primary/90 transition-colors"
+                                            >
+                                                <Award className="w-4 h-4 text-text-secondary/70 group-hover:text-accent transition-colors" />
+                                                {ach}
+                                            </motion.li>
+                                        ))}
+                                    </ul>
                                 </div>
-                            </div>
+                            )}
+
+                            {edu.subjects && edu.subjects.length > 0 && (
+                                <div className="mt-8 pt-6 border-t border-border/50">
+                                    <div className="flex flex-wrap items-center gap-3">
+                                        {edu.subjects.map((sub, i) => (
+                                            <motion.div
+                                                key={i}
+                                                initial={{ opacity: 0, scale: 0.8 }}
+                                                whileInView={{ opacity: 1, scale: 1 }}
+                                                transition={{ duration: 0.3, delay: 0.2 + (i * 0.05) }}
+                                                viewport={{ once: true }}
+                                                className="inline-flex items-center gap-2 px-3 py-1.5 bg-background rounded-lg border border-border 
+                                                 text-xs font-semibold text-text-primary hover:border-accent/40 shadow-sm transition-all duration-300 cursor-default"
+                                            >
+                                                <span className="text-base leading-none">{sub.icon}</span>
+                                                {sub.name}
+                                            </motion.div>
+                                        ))}
+                                    </div>
+                                </div>
+                            )}
                         </motion.div>
                     ))}
                 </div>

@@ -7,7 +7,9 @@ import {
     Server,
     Database,
     Wrench,
+    LucideIcon
 } from "lucide-react";
+import type { Skill } from "@/types";
 
 /* ── devicon CDN logos for each skill ── */
 const skillIcons: Record<string, string> = {
@@ -29,7 +31,7 @@ const skillIcons: Record<string, string> = {
     "Docker": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
 };
 
-const categories = [
+const defaultCategories = [
     {
         title: "Languages",
         icon: Code2,
@@ -104,7 +106,36 @@ function SkillPill({ name, index }: { name: string; index: number }) {
     );
 }
 
-export default function Skills() {
+const getCategoryIcon = (category: string): LucideIcon => {
+    const c = category.toLowerCase();
+    if (c.includes("language")) return Code2;
+    if (c.includes("ai") || c.includes("ml") || c.includes("data")) return Layout;
+    if (c.includes("framework") || c.includes("librar")) return Server;
+    if (c.includes("database") || c.includes("db")) return Database;
+    return Wrench;
+};
+
+const getCategoryColor = (category: string) => {
+    const c = category.toLowerCase();
+    if (c.includes("language")) return "from-violet-500 to-purple-600";
+    if (c.includes("ai") || c.includes("ml") || c.includes("data")) return "from-blue-500 to-cyan-500";
+    if (c.includes("framework") || c.includes("librar")) return "from-green-500 to-emerald-500";
+    if (c.includes("database") || c.includes("db")) return "from-orange-500 to-amber-500";
+    return "from-rose-500 to-pink-500";
+};
+
+interface SkillsProps {
+    skills?: Skill[];
+}
+
+export default function Skills({ skills = [] }: SkillsProps) {
+    const displayCategories = skills && skills.length > 0 ? skills.map(s => ({
+        title: s.category,
+        icon: getCategoryIcon(s.category),
+        color: getCategoryColor(s.category),
+        skills: s.skills || []
+    })) : defaultCategories;
+
     return (
         <section id="skills" className="py-20 px-4 sm:px-6">
             <div className="max-w-6xl mx-auto">
@@ -129,7 +160,7 @@ export default function Skills() {
                     viewport={{ once: true }}
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5"
                 >
-                    {categories.map((category) => (
+                    {displayCategories.map((category) => (
                         <motion.div
                             key={category.title}
                             variants={cardVariant}
@@ -144,7 +175,7 @@ export default function Skills() {
                             </div>
                             <div className="flex flex-wrap gap-2">
                                 {category.skills.map((skill, i) => (
-                                    <SkillPill key={skill} name={skill} index={i} />
+                                    <SkillPill key={skill + i} name={skill} index={i} />
                                 ))}
                             </div>
                         </motion.div>
