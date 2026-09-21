@@ -36,53 +36,7 @@ const techIcons: Record<string, string> = {
     "Electron": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg",
 };
 
-const defaultProjects = [
-    {
-        title: "Loan Assistant",
-        subtitle: "AI-Driven Financial Platform",
-        systemLine: "An AI-powered Indian student loan repayment platform built on the MERN stack with Next.js.",
-        bullets: [
-            "Generated precise loan repayment plans using Google Gemini AI",
-            "Deployed on Vercel and Render using Express serverless backend",
-            "Designed robust responsive interfaces with custom Light/Dark themes and glassmorphic styling",
-        ],
-        tech: ["Next.js", "React.js", "Node.js", "Express.js", "MongoDB", "TailwindCSS", "Google Gemini AI"],
-        github: "https://github.com/deepak179-s/loan-assistant",
-        live: "", 
-        image: {
-            light: "/loan-assistant_light.png",
-            dark: "/loan-assistant_dark.png"
-        },
-    },
-    {
-        title: "BrightTrack",
-        subtitle: "Smart Study Lamp System",
-        systemLine: "An IoT-based study productivity device synchronizing Arduino hardware and Python software.",
-        bullets: [
-            "Programmed Arduino firmware to track study duration and focus intervals",
-            "Engineered Python scripts to sync sensor data and provide analytics",
-            "Compiled detailed documentation spanning system functionality and benefits",
-        ],
-        tech: ["Python", "Arduino", "C++"],
-        github: "https://github.com/deepak179-s/BrightTrack",
-        live: "",
-        image: "/splitr.png", // placeholder
-    },
-    {
-        title: "ThreadLab",
-        subtitle: "Multi-threaded Application Simulator",
-        systemLine: "An interactive, real-time simulator for threading models, CPU scheduling, and deadlock handling.",
-        bullets: [
-            "Engineered a seamless cross-platform experience functioning both as an Electron desktop app and a static web app",
-            "Simulated complex OS concepts including synchronization primitives and process scheduling",
-            "Deployed as a serverless static web application on Vercel ensuring high availability",
-        ],
-        tech: ["JavaScript", "HTML5", "CSS3", "Electron"],
-        github: "https://github.com/deepak179-s/ThreadLab",
-        live: "",
-        image: "/ThreadLab.png",
-    }
-];
+
 
 const container = {
     hidden: { opacity: 0 },

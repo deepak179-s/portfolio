@@ -96,38 +96,7 @@ const skillIcons: Record<string, string> = {
     "RabbitMQ": "https://img.icons8.com/color/48/rabbitmq.png",
 };
 
-const defaultCategories = [
-    {
-        title: "Languages",
-        icon: Code2,
-        color: "from-violet-500 to-purple-600",
-        skills: ["Python", "Java", "C++", "C", "SQL", "JavaScript"],
-    },
-    {
-        title: "AI, ML & DS",
-        icon: Layout,
-        color: "from-blue-500 to-cyan-500",
-        skills: ["Machine Learning", "Data Science", "Deep Learning", "NLP", "Computer Vision"],
-    },
-    {
-        title: "Frameworks & Libraries",
-        icon: Server,
-        color: "from-green-500 to-emerald-500",
-        skills: ["TensorFlow", "PyTorch", "Scikit-Learn", "Pandas", "NumPy", "Matplotlib"],
-    },
-    {
-        title: "Databases",
-        icon: Database,
-        color: "from-orange-500 to-amber-500",
-        skills: ["PostgreSQL", "MongoDB", "MySQL"],
-    },
-    {
-        title: "Tools & Core Skills",
-        icon: Wrench,
-        color: "from-rose-500 to-pink-500",
-        skills: ["Data Structures & Algorithms (DSA)", "Git", "Docker", "Jupyter"],
-    },
-];
+
 
 const container = {
     hidden: { opacity: 0 },

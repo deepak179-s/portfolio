@@ -4,27 +4,7 @@ import { motion } from "framer-motion";
 import { GraduationCap, Calendar, Award } from "lucide-react";
 import type { Education as EducationType } from "@/types";
 
-const defaultEducationData = [
-    {
-        degree: "Bachelor of Technology (CSE)",
-        institution: "Lovely Professional University (LPU)",
-        period: "Current",
-        location: "Jalandhar, Punjab, India",
-        description: "Pursuing degree with a focus on Artificial Intelligence, Data Science, Machine Learning, and software algorithms.",
-        achievements: [
-            "Focusing on advanced AI/DS topics",
-            "Strong fundamentals in DSA"
-        ],
-        subjects: [
-            { name: "DSA", icon: "💻" },
-            { name: "Machine Learning", icon: "🤖" },
-            { name: "Data Science", icon: "📊" },
-            { name: "Python", icon: "🐍" },
-            { name: "Deep Learning", icon: "🧠" },
-            { name: "Java / C++", icon: "⚙️" }
-        ]
-    }
-];
+
 
 interface EducationProps {
     education?: EducationType[];
