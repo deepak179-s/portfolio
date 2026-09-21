@@ -19,8 +19,8 @@ export default function Education({ education = [] }: EducationProps) {
         period: edu.duration,
         location: "Jalandhar, Punjab, India", // Default
         description: edu.score ? `Score: ${edu.score}` : "",
-        achievements: [],
-        subjects: []
+        achievements: [] as string[],
+        subjects: [] as { name: string; icon: string }[]
     }));
 
     return (
