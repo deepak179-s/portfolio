@@ -31,7 +31,9 @@ interface EducationProps {
 }
 
 export default function Education({ education = [] }: EducationProps) {
-    const displayEducation = education && education.length > 0 ? education.map(edu => ({
+    if (!education || education.length === 0) return null;
+
+    const displayEducation = education.map(edu => ({
         degree: edu.degree,
         institution: edu.institution,
         period: edu.duration,
@@ -39,7 +41,7 @@ export default function Education({ education = [] }: EducationProps) {
         description: edu.score ? `Score: ${edu.score}` : "",
         achievements: [],
         subjects: []
-    })) : defaultEducationData;
+    }));
 
     return (
         <section id="education" className="py-24 px-4 overflow-hidden">

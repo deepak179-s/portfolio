@@ -194,12 +194,14 @@ interface SkillsProps {
 }
 
 export default function Skills({ skills = [] }: SkillsProps) {
-    const displayCategories = skills && skills.length > 0 ? skills.map(s => ({
+    if (!skills || skills.length === 0) return null;
+
+    const displayCategories = skills.map(s => ({
         title: s.category,
         icon: getCategoryIcon(s.category),
         color: getCategoryColor(s.category),
         skills: s.skills || []
-    })) : defaultCategories;
+    }));
 
     return (
         <section id="skills" className="py-20 px-4 sm:px-6">

@@ -3,45 +3,24 @@
 import { motion } from "framer-motion";
 import type { Experience as ExperienceType } from "@/types";
 
-const defaultExperiences = [
-    {
-        role: "SDE Intern",
-        company: "Graphketing",
-        badge: "Internship",
-        period: "Aug 2025 – Oct 2025",
-        location: "Remote",
-        points: [
-            "Built and shipped admin dashboard features enabling real-time visualization of operational metrics through scalable REST API integrations",
-            "Improved frontend performance and reliability by identifying and resolving critical UI issues, optimizing data-fetching workflows, and ensuring cross-browser compatibility",
-            "Delivered production-ready, reusable UI components by translating product requirements into scalable frontend architecture",
-            "Collaborated with backend engineers to integrate APIs and ensure consistent data flow across the application"
-        ],
-        tech: [
-            { name: "React.js", icon: "⚛️" }, 
-            { name: "Node.js", icon: "🟢" }, 
-            { name: "Express.js", icon: "⚙️" }, 
-            { name: "REST APIs", icon: "🔌" }, 
-            { name: "Tailwind CSS", icon: "💨" }
-        ],
-        logo: "G"
-    },
-];
 
 interface ExperienceProps {
     experience?: ExperienceType[];
 }
 
 export default function Experience({ experience = [] }: ExperienceProps) {
-    const displayExperiences = experience && experience.length > 0 ? experience.map(exp => ({
+    if (!experience || experience.length === 0) return null;
+
+    const displayExperiences = experience.map(exp => ({
         role: exp.role,
         company: exp.company,
-        badge: "Experience", // Default since it's not in DB
+        badge: "Experience",
         period: exp.duration,
-        location: "On-site / Remote", // Default since it's not in DB
+        location: "On-site / Remote",
         points: exp.description ? exp.description.split("\n").filter(p => p.trim() !== "") : [],
-        tech: [], // Default empty
+        tech: [],
         logo: exp.company.charAt(0).toUpperCase()
-    })) : defaultExperiences;
+    }));
 
     return (
         <section id="experience" className="py-24 px-4 overflow-hidden">

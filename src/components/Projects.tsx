@@ -131,17 +131,18 @@ interface ProjectsProps {
 }
 
 export default function Projects({ projects = [] }: ProjectsProps) {
-    // Map db projects to component format if provided, else use defaults
-    const displayProjects = projects && projects.length > 0 ? projects.map(p => ({
+    if (!projects || projects.length === 0) return null;
+
+    const displayProjects = projects.map(p => ({
         title: p.title,
-        subtitle: "", // DB might not have subtitle, leave empty or parse from description
+        subtitle: "", 
         systemLine: p.description.split("\n")[0] || "",
         bullets: p.description.split("\n").slice(1).filter(b => b.trim() !== ""),
         tech: p.tech_stack || [],
         github: p.github_url || "",
         live: p.demo_url || "",
         image: p.image_url || "/splitr.png"
-    })) : defaultProjects;
+    }));
 
     return (
         <section id="projects" className="py-20 px-4 sm:px-6">
