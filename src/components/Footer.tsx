@@ -40,7 +40,7 @@ export default function Footer({ socialLinks = [], profile }: FooterProps) {
         });
     }
 
-    const name = profile?.full_name || "Deepak Kumar";
+    const name = profile?.name || "Deepak Kumar";
 
     return (
         <footer className="py-8 px-4 border-t border-border">

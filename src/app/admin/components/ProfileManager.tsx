@@ -8,7 +8,7 @@ export default function ProfileManager() {
   const [loading, setLoading] = useState(false);
   const [profileData, setProfileData] = useState({
     id: "",
-    full_name: "",
+    name: "",
     email: "",
     bio: "",
     about: "",
@@ -99,8 +99,8 @@ export default function ProfileManager() {
           <label className="block text-sm font-medium mb-2">Full Name</label>
           <input
             type="text"
-            value={profileData.full_name || ""}
-            onChange={(e) => setProfileData({...profileData, full_name: e.target.value})}
+            value={profileData.name || ""}
+            onChange={(e) => setProfileData({...profileData, name: e.target.value})}
             className="w-full rounded-xl border border-slate-300 dark:border-slate-700 bg-transparent py-2.5 px-4 focus:border-blue-500 focus:outline-none"
           />
         </div>
