@@ -10,6 +10,7 @@ export default function ExperienceManager() {
   const [loading, setLoading] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Experience>>({});
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     fetchExperiences();
@@ -72,6 +73,31 @@ export default function ExperienceManager() {
     });
   };
 
+  const handleTechStackChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // keeping this just in case, though Experience doesn't use it currently
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]) return;
+    
+    const file = e.target.files[0];
+    const bucket = 'portfolio-assets';
+    const fileName = `experience-${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
+    
+    setUploadingImage(true);
+    try {
+      const { error: uploadError } = await supabase.storage.from(bucket).upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from(bucket).getPublicUrl(fileName);
+      setEditForm({ ...editForm, logo_url: data.publicUrl });
+    } catch (error: any) {
+      alert(`Error uploading image: ${error.message}`);
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -132,14 +158,22 @@ export default function ExperienceManager() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Logo URL (Optional)</label>
-                    <input 
-                      type="text" 
-                      value={editForm.logo_url || ""} 
-                      onChange={e => setEditForm({...editForm, logo_url: e.target.value})}
-                      className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none"
-                      placeholder="https://example.com/logo.png"
-                    />
+                    <label className="block text-sm font-medium mb-1">Logo</label>
+                    <div className="flex items-center gap-4">
+                      {editForm.logo_url && (
+                        <img src={editForm.logo_url} alt="Preview" className="h-10 w-10 object-contain rounded border border-slate-300 dark:border-slate-700 bg-white" />
+                      )}
+                      <div className="flex-1">
+                        <input 
+                          type="file" 
+                          accept="image/*"
+                          onChange={handleImageUpload}
+                          disabled={uploadingImage}
+                          className="text-sm w-full"
+                        />
+                        {uploadingImage && <span className="text-xs text-blue-500 block mt-1">Uploading...</span>}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -158,7 +192,7 @@ export default function ExperienceManager() {
                   <button onClick={handleCancel} className="flex items-center gap-1 px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
                     <X className="h-4 w-4" /> Cancel
                   </button>
-                  <button onClick={handleSave} disabled={loading} className="flex items-center gap-1 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50">
+                  <button onClick={handleSave} disabled={loading || uploadingImage} className="flex items-center gap-1 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50">
                     <Check className="h-4 w-4" /> Save
                   </button>
                 </div>
