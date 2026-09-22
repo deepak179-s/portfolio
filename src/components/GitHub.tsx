@@ -7,7 +7,7 @@ import { GitHubCalendar } from "react-github-calendar";
 
 export default function GitHub() {
     const [mounted, setMounted] = useState(false);
-    const [stats, setStats] = useState({ repos: 0, stars: 0, contributions: 0 });
+    const [stats, setStats] = useState({ repos: -1, stars: -1, contributions: -1 });
 
     useEffect(() => {
         setMounted(true);
@@ -122,19 +122,19 @@ export default function GitHub() {
 
                             {/* Quick stats */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                <div className="text-center p-4 bg-background rounded-xl border border-border">
+                                <div className="text-center p-4 bg-background rounded-xl border border-border hover:-translate-y-1 transition-transform">
                                     <Code2 className="w-6 h-6 text-accent mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.repos > 0 ? stats.repos : "2+"}</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.repos !== -1 ? stats.repos : "..."}</p>
                                     <p className="text-xs text-text-secondary mt-1">Repositories</p>
                                 </div>
-                                <div className="text-center p-4 bg-background rounded-xl border border-border">
+                                <div className="text-center p-4 bg-background rounded-xl border border-border hover:-translate-y-1 transition-transform">
                                     <Star className="w-6 h-6 text-yellow-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.stars > 0 ? stats.stars : "1+"}</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.stars !== -1 ? stats.stars : "..."}</p>
                                     <p className="text-xs text-text-secondary mt-1">Stars Earned</p>
                                 </div>
-                                <div className="text-center p-4 bg-background rounded-xl border border-border">
+                                <div className="text-center p-4 bg-background rounded-xl border border-border hover:-translate-y-1 transition-transform">
                                     <GitFork className="w-6 h-6 text-green-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.contributions > 0 ? stats.contributions : "50+"}</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.contributions !== -1 ? stats.contributions : "..."}</p>
                                     <p className="text-xs text-text-secondary mt-1">Contributions</p>
                                 </div>
                             </div>

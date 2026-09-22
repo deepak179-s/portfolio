@@ -27,13 +27,7 @@ export default function About({ profile }: AboutProps) {
 
     const name = profile?.name || "Deepak Kumar";
     const profilePhoto = profile?.profile_photo_url || "/profile.jpg";
-    const aboutHtml = profile?.about || `
-        <p>B.Tech CSE student specializing in Machine Learning, Data Science, and predictive modeling.</p>
-        <p>Currently pursuing my education at LPU Jalandhar, where I focus on applying complex algorithms to real-world challenges.</p>
-        <p>I have hands-on experience building AI models using Python, deep learning frameworks, and advanced mathematical concepts, while also maintaining a strong foundation in Data Structures and Algorithms (DSA).</p>
-        <p>With knowledge in Java, C, C++, and Python, I am equipped to develop optimized and highly scalable intelligence and data processing applications.</p>
-        <p class="font-medium text-text-primary">Passionate about using data to make informed decisions and build smart, self-learning systems.</p>
-    `;
+    const aboutHtml = profile?.about || `<p>A passionate developer focused on building scalable applications and solving real-world problems through technology.</p>`;
 
     return (
         <section id="about" className="py-24 px-4 overflow-hidden">

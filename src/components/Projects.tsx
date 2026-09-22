@@ -5,36 +5,7 @@ import { Github, Globe } from "lucide-react";
 import Image from "next/image";
 import type { Project } from "@/types";
 
-/* ── tech icon map using devicon CDN ── */
-const techIcons: Record<string, string> = {
-    "React.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg",
-    "Next.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nextjs/nextjs-original.svg",
-    "Node.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg",
-    "Express.js": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/express/express-original.svg",
-    "MongoDB": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg",
-    "PostgreSQL": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
-    "TailwindCSS": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
-    "TypeScript": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/typescript/typescript-original.svg",
-    "JavaScript": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg",
-    "Socket.io": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/socketio/socketio-original.svg",
-    "Redis": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",
-    "Vite": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vitejs/vitejs-original.svg",
-    "Stripe": "https://img.icons8.com/color/48/stripe.png",
-    "Convex": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/convex/convex-original.svg",
-    "Clerk": "https://img.clerk.com/static/logo-dark-mode-400x400.png",
-    "Shadcn/UI": "https://avatars.githubusercontent.com/u/139895814?s=48&v=4",
-    "Cloudinary": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudinary/cloudinary-original.svg",
-    "JWT": "https://jwt.io/img/pic_logo.svg",
-    "Inngest": "https://avatars.githubusercontent.com/u/74947497?s=48&v=4",
-    "Google Gemini AI": "https://img.icons8.com/fluency/48/google-gemini.png",
-    "Resend": "https://avatars.githubusercontent.com/u/108891279?s=48&v=4",
-    "Python": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
-    "Arduino": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg",
-    "C++": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg",
-    "HTML5": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg",
-    "CSS3": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg",
-    "Electron": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/electron/electron-original.svg",
-};
+import { techIcons } from "@/utils/icons";
 
 
 
@@ -42,7 +13,7 @@ const container = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
-        transition: { staggerChildren: 0.15 },
+        transition: { staggerChildren: 0.15, delayChildren: 0.1 },
     },
 };
 
@@ -126,8 +97,8 @@ export default function Projects({ projects = [] }: ProjectsProps) {
                         <motion.div
                             key={project.title + idx}
                             variants={cardVariant}
-                            className="group bg-card rounded-2xl border border-border overflow-hidden
-                         hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5 
+                            className="group bg-card/60 backdrop-blur-sm rounded-2xl border border-border overflow-hidden
+                         hover:border-accent/40 hover:shadow-2xl hover:shadow-accent/10 hover:-translate-y-1
                          transition-all duration-300"
                         >
                             {/* Project Image */}

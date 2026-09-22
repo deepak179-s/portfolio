@@ -9,9 +9,10 @@ import {
     Linkedin,
     MapPin,
     CheckCircle2,
-    Link as LinkIcon
 } from "lucide-react";
 import type { SocialLink } from "@/types";
+import { getPlatformDetails } from "@/utils/helpers";
+import toast from "react-hot-toast";
 
 const defaultSocials = [
     {
@@ -43,42 +44,7 @@ const defaultSocials = [
     },
 ];
 
-const getPlatformDetails = (platform: string, url: string) => {
-    const p = platform.toLowerCase();
-    let name = platform;
-    let value = url.replace(/(^\w+:|^)\/\//, '').replace(/\/$/, ''); // simple url formatter
-    let href = url;
-    let icon = LinkIcon;
-    let color = "text-accent";
-    let bg = "bg-accent/10";
-    let borderHover = "hover:border-accent/50";
 
-    if (p.includes("github")) {
-        name = "GitHub";
-        icon = Github;
-        color = "text-gray-700 dark:text-gray-300";
-        bg = "bg-gray-500/10";
-        borderHover = "hover:border-gray-500/50";
-        value = url.split("github.com/")[1] || value;
-    } else if (p.includes("linkedin")) {
-        name = "LinkedIn";
-        icon = Linkedin;
-        color = "text-blue-600";
-        bg = "bg-blue-500/10";
-        borderHover = "hover:border-blue-600/50";
-        value = url.split("in/")[1]?.replace(/\/$/, '') || value;
-    } else if (p.includes("email") || p.includes("mail")) {
-        name = "Email";
-        icon = Mail;
-        color = "text-red-500";
-        bg = "bg-red-500/10";
-        borderHover = "hover:border-red-500/50";
-        href = url.startsWith("mailto:") ? url : `mailto:${url}`;
-        value = url.replace("mailto:", "");
-    }
-
-    return { name, value, href, icon, color, bg, borderHover };
-};
 
 interface ContactProps {
     socialLinks?: SocialLink[];
@@ -116,7 +82,7 @@ export default function Contact({ socialLinks = [], email }: ContactProps) {
                     Accept: "application/json",
                 },
                 body: JSON.stringify({
-                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "bfb7bc7c-13a0-45e7-b159-49bb47a926de",
+                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "", // Ensure you add this to your .env
                     name: formData.name,
                     email: formData.email,
                     message: formData.message,
@@ -127,13 +93,19 @@ export default function Contact({ socialLinks = [], email }: ContactProps) {
             if (result.success) {
                 setSubmitted(true);
                 setFormData({ name: "", email: "", message: "" });
+                toast.success("Message sent successfully! I'll get back to you soon.", {
+                    icon: '🚀',
+                });
                 setTimeout(() => setSubmitted(false), 5000);
             } else {
-                setError(result.message || "Failed to send message. Please try again later.");
+                const errorMsg = result.message || "Failed to send message. Please try again later.";
+                setError(errorMsg);
+                toast.error(errorMsg);
             }
         } catch (err) {
             console.error("Failed to send email:", err);
             setError("Failed to send message. Please log in or try again later.");
+            toast.error("Network error. Please try again later.");
         } finally {
             setIsSubmitting(false);
         }

@@ -1,19 +1,19 @@
 {
   "userData": {
-    "solvedProblem": 0,
-    "easySolved": 0,
+    "solvedProblem": 1,
+    "easySolved": 1,
     "mediumSolved": 0,
     "hardSolved": 0,
     "totalSubmissionNum": [
       {
         "difficulty": "All",
-        "count": 0,
-        "submissions": 0
+        "count": 1,
+        "submissions": 1
       },
       {
         "difficulty": "Easy",
-        "count": 0,
-        "submissions": 0
+        "count": 1,
+        "submissions": 1
       },
       {
         "difficulty": "Medium",
@@ -29,13 +29,13 @@
     "acSubmissionNum": [
       {
         "difficulty": "All",
-        "count": 0,
-        "submissions": 0
+        "count": 1,
+        "submissions": 1
       },
       {
         "difficulty": "Easy",
-        "count": 0,
-        "submissions": 0
+        "count": 1,
+        "submissions": 1
       },
       {
         "difficulty": "Medium",
@@ -53,9 +53,11 @@
     "contestParticipation": []
   },
   "calData": {
-    "activeYears": [],
-    "streak": 0,
-    "totalActiveDays": 0,
-    "submissionCalendar": "{}"
+    "activeYears": [
+      2026
+    ],
+    "streak": 1,
+    "totalActiveDays": 1,
+    "submissionCalendar": "{\"1774396800\": 1}"
   }
 }

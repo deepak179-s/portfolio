@@ -24,7 +24,7 @@ export default function FloatingBackground() {
   useEffect(() => {
     // Generate random items only on the client to avoid hydration mismatch
     const allItems: FloatingElement[] = [];
-    const count = 18; // Adjust number of floating elements here
+    const count = 15; // slightly reduced count for better performance
 
     for (let i = 0; i < count; i++) {
       allItems.push({
@@ -32,14 +32,13 @@ export default function FloatingBackground() {
         content: elements[Math.floor(Math.random() * elements.length)],
         x: `${Math.random() * 100}vw`,
         y: `${Math.random() * 100}vh`,
-        duration: 20 + Math.random() * 20, // 20s to 40s
-        delay: Math.random() * -30, // Start at different points in animation
-        scale: 0.6 + Math.random() * 0.8, // 0.6 to 1.4
-        rotation: (Math.random() - 0.5) * 45, // -22.5deg to 22.5deg
+        duration: 25 + Math.random() * 20, // 25s to 45s (slower is smoother)
+        delay: Math.random() * -30, 
+        scale: 0.6 + Math.random() * 0.8, 
+        rotation: (Math.random() - 0.5) * 45, 
       });
     }
 
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setItems(allItems);
   }, []);
 
@@ -50,9 +49,9 @@ export default function FloatingBackground() {
           key={item.id}
           initial={{ opacity: 0 }}
           animate={{
-            opacity: [0.2, 0.5, 0.2],
-            y: ["0vh", "-10vh", "0vh"],
-            x: ["0vw", "3vw", "0vw"],
+            opacity: [0.1, 0.4, 0.1],
+            y: ["0vh", "-8vh", "0vh"],
+            x: ["0vw", "2vw", "0vw"],
             rotate: [item.rotation, item.rotation + 15, item.rotation]
           }}
           transition={{
@@ -61,7 +60,7 @@ export default function FloatingBackground() {
             delay: item.delay,
             ease: "easeInOut"
           }}
-          className="absolute text-2xl sm:text-3xl lg:text-4xl font-mono text-text-secondary select-none opacity-50"
+          className="absolute text-xl sm:text-2xl lg:text-3xl font-mono text-text-secondary select-none opacity-40"
           style={{
             left: item.x,
             top: item.y,

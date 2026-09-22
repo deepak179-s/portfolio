@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import FloatingBackground from "@/components/FloatingBackground";
+import ScrollToTop from "@/components/ScrollToTop";
+import { Toaster } from "react-hot-toast";
+import dynamic from "next/dynamic";
 import "./globals.css";
+
+const FloatingBackground = dynamic(() => import("@/components/FloatingBackground"));
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,6 +47,13 @@ export default function RootLayout({
         <ThemeProvider>
           <FloatingBackground />
           <div className="relative z-10">{children}</div>
+          <ScrollToTop />
+          <Toaster 
+            position="bottom-right"
+            toastOptions={{
+              className: 'dark:bg-[#18181b] dark:text-[#f8fafc] bg-white text-gray-900 border border-[#27272a]',
+            }}
+          />
         </ThemeProvider>
       </body>
     </html>

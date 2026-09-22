@@ -7,9 +7,9 @@ import { ActivityCalendar } from "react-activity-calendar";
 
 export default function LeetCode() {
     const [stats, setStats] = useState({ 
-        solved: 0, 
-        contestRating: 0, 
-        topPercentage: 0 
+        solved: -1, 
+        contestRating: -1, 
+        topPercentage: -1 
     });
     const [calendarData, setCalendarData] = useState<{ date: string; count: number; level: number }[]>([]);
 
@@ -111,7 +111,7 @@ export default function LeetCode() {
                                     <div className="inline-flex items-center gap-3 mb-2">
                                         <Flame className="w-10 h-10 text-orange-500" />
                                         <span className="text-6xl sm:text-7xl font-extrabold bg-gradient-to-r from-orange-500 to-amber-500 bg-clip-text text-transparent">
-                                            {stats.solved === 0 ? "..." : stats.solved}
+                                            {stats.solved === -1 ? "..." : stats.solved}
                                         </span>
                                     </div>
                                     <p className="text-xl text-text-secondary font-medium">Problems Solved</p>
@@ -138,17 +138,17 @@ export default function LeetCode() {
                             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
                                     <Trophy className="w-6 h-6 text-amber-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.solved || "..."}</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.solved === -1 ? "..." : stats.solved}</p>
                                     <p className="text-xs text-text-secondary mt-1">Total Solved</p>
                                 </div>
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
                                     <Zap className="w-6 h-6 text-blue-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.contestRating || "..."}</p>
+                                    <p className="text-2xl font-bold text-text-primary">{stats.contestRating === -1 ? "..." : stats.contestRating}</p>
                                     <p className="text-xs text-text-secondary mt-1">Contest Rating</p>
                                 </div>
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
                                     <TrendingUp className="w-6 h-6 text-green-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">Top {stats.topPercentage ? `${stats.topPercentage}%` : "..."}</p>
+                                    <p className="text-2xl font-bold text-text-primary">Top {stats.topPercentage !== -1 ? `${stats.topPercentage}%` : "..."}</p>
                                     <p className="text-xs text-text-secondary mt-1">Global Rank</p>
                                 </div>
                                 <div className="text-center p-4 bg-background rounded-xl border border-border">
