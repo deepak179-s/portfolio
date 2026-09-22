@@ -299,7 +299,7 @@ export default function Contact({ socialLinks = [], email }: ContactProps) {
                                         type="submit"
                                         disabled={isSubmitting || submitted}
                                         className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-accent text-white 
-                                        font-bold text-[15px] rounded-2xl hover:bg-accent-hover transition-all duration-300 
+                                        font-bold text-[15px] rounded-2xl hover:bg-accent-hover transition-all duration-300 cursor-pointer
                                         shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgb(var(--accent)/0.3)] shadow-accent/20 border-b-4 border-accent-hover disabled:opacity-70 disabled:cursor-not-allowed"
                                     >
                                         <AnimatePresence mode="wait">

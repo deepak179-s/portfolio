@@ -67,7 +67,8 @@ export default function ExperienceManager() {
       role: "",
       company: "",
       duration: "",
-      description: ""
+      description: "",
+      logo_url: ""
     });
   };
 
@@ -120,14 +121,26 @@ export default function ExperienceManager() {
                   </div>
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-medium mb-1">Duration (e.g. Aug 2025 - Oct 2025) *</label>
-                  <input 
-                    type="text" 
-                    value={editForm.duration || ""} 
-                    onChange={e => setEditForm({...editForm, duration: e.target.value})}
-                    className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none"
-                  />
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Duration (e.g. Aug 2025 - Oct 2025) *</label>
+                    <input 
+                      type="text" 
+                      value={editForm.duration || ""} 
+                      onChange={e => setEditForm({...editForm, duration: e.target.value})}
+                      className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Logo URL (Optional)</label>
+                    <input 
+                      type="text" 
+                      value={editForm.logo_url || ""} 
+                      onChange={e => setEditForm({...editForm, logo_url: e.target.value})}
+                      className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none"
+                      placeholder="https://example.com/logo.png"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -152,14 +165,25 @@ export default function ExperienceManager() {
               </div>
             ) : (
               <div className="flex items-start justify-between">
-                <div>
-                  <h4 className="font-bold text-lg">{exp.role} at {exp.company}</h4>
-                  <p className="text-sm text-slate-500 font-medium">{exp.duration}</p>
-                  <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
-                    {exp.description?.split('\n').map((line, i) => <p key={i}>• {line}</p>)}
+                <div className="flex gap-4">
+                  {exp.logo_url ? (
+                    <div className="w-12 h-12 shrink-0 rounded-lg border border-slate-200 dark:border-slate-800 bg-white p-1 overflow-hidden">
+                      <img src={exp.logo_url} alt={exp.company} className="w-full h-full object-contain" />
+                    </div>
+                  ) : (
+                    <div className="w-12 h-12 shrink-0 rounded-lg border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 flex items-center justify-center font-bold text-slate-500">
+                      {exp.company.charAt(0)}
+                    </div>
+                  )}
+                  <div>
+                    <h4 className="font-bold text-lg">{exp.role} at {exp.company}</h4>
+                    <p className="text-sm text-slate-500 font-medium">{exp.duration}</p>
+                    <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
+                      {exp.description?.split('\n').map((line, i) => <p key={i}>• {line}</p>)}
+                    </div>
                   </div>
                 </div>
-                <div className="flex gap-2 shrink-0">
+                <div className="flex gap-2 shrink-0 ml-4">
                   <button onClick={() => handleEdit(exp)} className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors">
                     <Edit2 className="h-4 w-4" />
                   </button>

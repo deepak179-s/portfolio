@@ -19,7 +19,8 @@ export default function Experience({ experience = [] }: ExperienceProps) {
         location: "On-site / Remote",
         points: exp.description ? exp.description.split("\n").filter(p => p.trim() !== "") : [],
         tech: [] as { name: string; icon: string }[],
-        logo: exp.company.charAt(0).toUpperCase()
+        logo: exp.company.charAt(0).toUpperCase(),
+        logo_url: exp.logo_url
     }));
 
     return (
@@ -58,8 +59,12 @@ export default function Experience({ experience = [] }: ExperienceProps) {
                                         transition={{ duration: 0.3 }}
                                         className="hidden sm:flex flex-shrink-0 mt-1"
                                     >
-                                        <div className="w-14 h-14 rounded-2xl bg-background border border-border flex items-center justify-center text-xl font-bold text-text-primary shadow-sm group-hover:border-accent/40 transition-colors">
-                                            {exp.logo}
+                                        <div className="w-14 h-14 rounded-2xl bg-background border border-border flex items-center justify-center text-xl font-bold text-text-primary shadow-sm group-hover:border-accent/40 transition-colors overflow-hidden">
+                                            {exp.logo_url ? (
+                                                <img src={exp.logo_url} alt={`${exp.company} logo`} className="w-full h-full object-contain p-2 bg-white" />
+                                            ) : (
+                                                exp.logo
+                                            )}
                                         </div>
                                     </motion.div>
 
