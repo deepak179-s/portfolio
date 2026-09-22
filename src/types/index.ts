@@ -26,6 +26,7 @@ export interface Experience {
   duration: string;
   description: string | null;
   logo_url?: string | null;
+  location_type?: string | null;
   order_index: number;
 }
 

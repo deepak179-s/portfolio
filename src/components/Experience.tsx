@@ -16,7 +16,7 @@ export default function Experience({ experience = [] }: ExperienceProps) {
         company: exp.company,
         badge: "Experience",
         period: exp.duration,
-        location: "On-site / Remote",
+        location: exp.location_type || "On-site / Remote",
         points: exp.description ? exp.description.split("\n").filter(p => p.trim() !== "") : [],
         tech: [] as { name: string; icon: string }[],
         logo: exp.company.charAt(0).toUpperCase(),

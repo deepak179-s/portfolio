@@ -69,7 +69,8 @@ export default function ExperienceManager() {
       company: "",
       duration: "",
       description: "",
-      logo_url: ""
+      logo_url: "",
+      location_type: "On-site"
     });
   };
 
@@ -158,12 +159,37 @@ export default function ExperienceManager() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-1">Logo</label>
-                    <div className="flex items-center gap-4">
-                      {editForm.logo_url && (
-                        <img src={editForm.logo_url} alt="Preview" className="h-10 w-10 object-contain rounded border border-slate-300 dark:border-slate-700 bg-white" />
-                      )}
-                      <div className="flex-1">
+                    <label className="block text-sm font-medium mb-1">Location Type</label>
+                    <select 
+                      value={editForm.location_type || "On-site"} 
+                      onChange={e => setEditForm({...editForm, location_type: e.target.value})}
+                      className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none [&>option]:bg-white dark:[&>option]:bg-slate-900"
+                    >
+                      <option value="On-site">On-site</option>
+                      <option value="Remote">Remote</option>
+                      <option value="Hybrid">Hybrid</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Company Logo</label>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    {editForm.logo_url && (
+                      <div className="shrink-0">
+                        <img src={editForm.logo_url} alt="Preview" className="h-12 w-12 object-contain rounded border border-slate-300 dark:border-slate-700 bg-white p-1" />
+                      </div>
+                    )}
+                    <div className="flex-1 space-y-2">
+                      <input 
+                        type="text" 
+                        value={editForm.logo_url || ""} 
+                        onChange={e => setEditForm({...editForm, logo_url: e.target.value})}
+                        className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 text-sm focus:border-blue-500 focus:outline-none"
+                        placeholder="Paste image URL here..."
+                      />
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-slate-500 font-medium uppercase">Or upload</span>
                         <input 
                           type="file" 
                           accept="image/*"
@@ -171,8 +197,8 @@ export default function ExperienceManager() {
                           disabled={uploadingImage}
                           className="text-sm w-full"
                         />
-                        {uploadingImage && <span className="text-xs text-blue-500 block mt-1">Uploading...</span>}
                       </div>
+                      {uploadingImage && <span className="text-xs text-blue-500 block">Uploading...</span>}
                     </div>
                   </div>
                 </div>
@@ -211,7 +237,7 @@ export default function ExperienceManager() {
                   )}
                   <div>
                     <h4 className="font-bold text-lg">{exp.role} at {exp.company}</h4>
-                    <p className="text-sm text-slate-500 font-medium">{exp.duration}</p>
+                    <p className="text-sm text-slate-500 font-medium">{exp.duration} • {exp.location_type || 'On-site'}</p>
                     <div className="mt-2 text-sm text-slate-600 dark:text-slate-400 line-clamp-2">
                       {exp.description?.split('\n').map((line, i) => <p key={i}>• {line}</p>)}
                     </div>
