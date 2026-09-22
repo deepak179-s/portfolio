@@ -7,6 +7,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "ghchart.rshah.org",
       },
+      {
+        protocol: "https",
+        hostname: "irunidgtivonmksjvddr.supabase.co",
+      }
     ],
   },
 };
