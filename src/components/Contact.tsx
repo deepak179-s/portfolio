@@ -82,7 +82,7 @@ export default function Contact({ socialLinks = [], email }: ContactProps) {
                     Accept: "application/json",
                 },
                 body: JSON.stringify({
-                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "", // Ensure you add this to your .env
+                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "bfb7bc7c-13a0-45e7-b159-49bb47a926de",
                     name: formData.name,
                     email: formData.email,
                     message: formData.message,
