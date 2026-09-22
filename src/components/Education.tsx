@@ -17,7 +17,7 @@ export default function Education({ education = [] }: EducationProps) {
         degree: edu.degree,
         institution: edu.institution,
         period: edu.duration,
-        location: "Jalandhar, Punjab, India", // Default
+        location: edu.location || "",
         description: edu.score ? `Score: ${edu.score}` : "",
         achievements: [] as string[],
         subjects: [] as { name: string; icon: string }[]

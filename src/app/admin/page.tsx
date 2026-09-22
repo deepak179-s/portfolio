@@ -32,35 +32,44 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="flex h-[85vh] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl">
+    <div className="flex flex-col md:flex-row h-[85vh] rounded-2xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-xl">
       {/* Sidebar */}
-      <div className="w-64 border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex flex-col">
-        <div className="p-6 border-b border-slate-200 dark:border-slate-800">
+      <div className="w-full md:w-64 border-b md:border-b-0 md:border-r border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 flex flex-col shrink-0">
+        <div className="p-4 md:p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
           <h2 className="text-xl font-bold flex items-center gap-2">
             <Settings className="h-5 w-5" />
-            Admin Panel
+            <span className="hidden sm:inline">Admin Panel</span>
+            <span className="sm:hidden">Admin</span>
           </h2>
+          <div className="md:hidden">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            >
+              <LogOut className="h-4 w-4" />
+            </button>
+          </div>
         </div>
-        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+        <nav className="p-3 md:p-4 flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto scrollbar-hide">
           {tabs.map((tab) => {
             const Icon = tab.icon
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                className={`whitespace-nowrap shrink-0 md:w-full flex items-center gap-2 md:gap-3 px-4 py-2.5 md:py-3 rounded-xl text-sm font-medium transition-colors ${
                   activeTab === tab.id
                     ? "bg-blue-600 text-white shadow-md"
                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white"
                 }`}
               >
-                <Icon className="h-5 w-5" />
+                <Icon className="h-4 w-4 md:h-5 md:w-5" />
                 {tab.label}
               </button>
             )
           })}
         </nav>
-        <div className="p-4 border-t border-slate-200 dark:border-slate-800">
+        <div className="hidden md:block mt-auto p-4 border-t border-slate-200 dark:border-slate-800">
           <button
             onClick={handleLogout}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
@@ -72,7 +81,7 @@ export default function AdminDashboard() {
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 overflow-y-auto bg-white dark:bg-slate-900 p-8">
+      <div className="flex-1 overflow-y-auto bg-white dark:bg-slate-900 p-4 md:p-8">
         {activeTab === "profile" && <ProfileManager />}
         {activeTab === "projects" && <ProjectsManager />}
         {activeTab === "experience" && <ExperienceManager />}

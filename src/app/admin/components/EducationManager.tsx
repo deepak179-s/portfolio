@@ -67,7 +67,8 @@ export default function EducationManager() {
       degree: "",
       institution: "",
       duration: "",
-      score: ""
+      score: "",
+      location: ""
     });
   };
 
@@ -140,6 +141,17 @@ export default function EducationManager() {
                       placeholder="e.g. 8.5 CGPA"
                     />
                   </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Location</label>
+                  <input 
+                    type="text" 
+                    value={editForm.location || ""} 
+                    onChange={e => setEditForm({...editForm, location: e.target.value})}
+                    className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none"
+                    placeholder="e.g. Jalandhar, Punjab, India"
+                  />
                 </div>
 
                 <div className="flex justify-end gap-2 pt-2 border-t border-slate-200 dark:border-slate-800">

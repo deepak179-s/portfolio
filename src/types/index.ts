@@ -34,6 +34,7 @@ export interface Education {
   institution: string;
   duration: string;
   score: string | null;
+  location?: string | null;
   order_index: number;
 }
 
