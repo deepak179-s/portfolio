@@ -83,4 +83,18 @@ export const techIcons: Record<string, string> = {
     "Nginx": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nginx/nginx-original.svg",
     "Kafka": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apachekafka/apachekafka-original.svg",
     "RabbitMQ": "https://img.icons8.com/color/48/rabbitmq.png",
+    
+    // Additional Data Science & AI
+    "Machine Learning": "https://img.icons8.com/color/48/artificial-intelligence.png",
+    "Data Science": "https://img.icons8.com/color/48/data-configuration.png",
+    "Deep Learning": "https://img.icons8.com/color/48/deep-learning.png",
+    "NLP": "https://img.icons8.com/color/48/natural-user-interface2.png",
+    "Computer Vision": "https://img.icons8.com/color/48/facial-recognition-scan.png",
+    "Data Structures & Algorithms (DSA)": "https://img.icons8.com/color/48/binary-tree.png",
+    "SciPy": "https://upload.wikimedia.org/wikipedia/commons/b/b2/SCIPY_2.svg",
+    "Panel": "https://img.icons8.com/color/48/combo-chart--v1.png",
+    "hvPlot": "https://img.icons8.com/color/48/line-chart.png",
+    "Seaborn": "https://seaborn.pydata.org/_static/logo-mark-lightbg.svg",
+    "Matplotlib": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matplotlib/matplotlib-original.svg",
+    "Jupyter Notebook": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg",
 };
