@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, FileText, ArrowDown, Link as LinkIcon, Twitter, Facebook, Instagram, Youtube } from "lucide-react";
+import { Github, Linkedin, Mail, FileText, ArrowDown, Link as LinkIcon, Twitter, Facebook, Instagram, Youtube, Award } from "lucide-react";
 import type { Profile, SocialLink } from "@/types";
 
 interface HeroProps {
@@ -138,6 +138,15 @@ export default function Hero({ profile, socialLinks = [] }: HeroProps) {
                     >
                         <FileText className="w-4 h-4" />
                         Resume
+                    </a>
+                    <a
+                        href="#certifications"
+                        className="inline-flex items-center gap-2 px-7 py-3.5 bg-card/50 backdrop-blur-md text-text-primary font-bold 
+                       rounded-xl border border-border hover:border-accent/50 hover:bg-card transition-all duration-300
+                       hover:-translate-y-0.5 shadow-sm"
+                    >
+                        <Award className="w-4 h-4" />
+                        Certificates
                     </a>
                 </motion.div>
 
