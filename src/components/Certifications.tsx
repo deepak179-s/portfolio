@@ -21,7 +21,7 @@ export default function Certifications({ certifications = [] }: CertificationsPr
                     transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
                     className="mb-14 text-left"
                 >
-                    <h2 className="text-4xl sm:text-5xl font-bold text-text-primary mb-3">Licenses & certifications</h2>
+                    <h2 className="text-4xl sm:text-5xl font-bold text-text-primary mb-3">Certifications</h2>
                     <div className="w-20 h-1.5 bg-accent rounded-full"></div>
                 </motion.div>
 
