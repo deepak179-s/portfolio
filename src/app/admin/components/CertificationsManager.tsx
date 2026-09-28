@@ -11,6 +11,7 @@ export default function CertificationsManager() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editForm, setEditForm] = useState<Partial<Certification>>({});
   const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadingDoc, setUploadingDoc] = useState(false);
 
   useEffect(() => {
     fetchCerts();
@@ -95,6 +96,28 @@ export default function CertificationsManager() {
     }
   };
 
+  const handleDocUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !e.target.files[0]) return;
+    
+    const file = e.target.files[0];
+    const bucket = 'portfolio-assets';
+    // Use a unique name
+    const fileName = `certificate-doc-${Date.now()}-${file.name.replace(/\s+/g, '_')}`;
+    
+    setUploadingDoc(true);
+    try {
+      const { error: uploadError } = await supabase.storage.from(bucket).upload(fileName, file);
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage.from(bucket).getPublicUrl(fileName);
+      setEditForm({ ...editForm, credential_url: data.publicUrl });
+    } catch (error: any) {
+      alert(`Error uploading document: ${error.message}`);
+    } finally {
+      setUploadingDoc(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -170,14 +193,27 @@ export default function CertificationsManager() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Credential URL (Optional)</label>
-                  <input 
-                    type="url" 
-                    value={editForm.credential_url || ""} 
-                    onChange={e => setEditForm({...editForm, credential_url: e.target.value})}
-                    className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 focus:border-blue-500 focus:outline-none"
-                    placeholder="https://credly.com/badges/..."
-                  />
+                  <label className="block text-sm font-medium mb-1">Credential URL or File (Optional)</label>
+                  <div className="flex flex-col space-y-2">
+                    <input 
+                      type="url" 
+                      value={editForm.credential_url || ""} 
+                      onChange={e => setEditForm({...editForm, credential_url: e.target.value})}
+                      className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-transparent py-2 px-3 text-sm focus:border-blue-500 focus:outline-none"
+                      placeholder="Paste link (e.g. Credly) or upload file below..."
+                    />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-slate-500 font-medium uppercase">Or upload certificate (PDF/Image)</span>
+                      <input 
+                        type="file" 
+                        accept="image/*,application/pdf"
+                        onChange={handleDocUpload}
+                        disabled={uploadingDoc}
+                        className="text-sm w-full"
+                      />
+                    </div>
+                    {uploadingDoc && <span className="text-xs text-blue-500 block">Uploading document...</span>}
+                  </div>
                 </div>
 
                 <div>
@@ -215,7 +251,7 @@ export default function CertificationsManager() {
                   <button onClick={handleCancel} className="flex items-center gap-1 px-4 py-2 rounded-lg text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800">
                     <X className="h-4 w-4" /> Cancel
                   </button>
-                  <button onClick={handleSave} disabled={loading || uploadingImage} className="flex items-center gap-1 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50">
+                  <button onClick={handleSave} disabled={loading || uploadingImage || uploadingDoc} className="flex items-center gap-1 px-4 py-2 rounded-lg bg-green-600 text-white hover:bg-green-700 disabled:opacity-50">
                     <Check className="h-4 w-4" /> Save
                   </button>
                 </div>
