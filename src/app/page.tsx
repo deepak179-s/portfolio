@@ -5,6 +5,7 @@ import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
 import Experience from "@/components/Experience";
 import Education from "@/components/Education";
+import Certifications from "@/components/Certifications";
 import About from "@/components/About";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
@@ -25,16 +26,18 @@ export default async function Home() {
   let projects = [];
   let experience = [];
   let education = [];
+  let certifications = [];
   let skills = [];
   let socialLinks = [];
 
   try {
     console.log("Fetching data from Supabase...");
-    const [profileRes, projectsRes, experienceRes, educationRes, skillsRes, linksRes] = await Promise.all([
+    const [profileRes, projectsRes, experienceRes, educationRes, certsRes, skillsRes, linksRes] = await Promise.all([
       supabase.from("profile").select("*").single(),
       supabase.from("projects").select("*").order("order_index", { ascending: true }),
       supabase.from("experience").select("*").order("order_index", { ascending: true }),
       supabase.from("education").select("*").order("order_index", { ascending: true }),
+      supabase.from("certifications").select("*").order("order_index", { ascending: true }),
       supabase.from("skills").select("*").order("order_index", { ascending: true }),
       supabase.from("social_links").select("*").order("order_index", { ascending: true }),
     ]);
@@ -44,6 +47,7 @@ export default async function Home() {
     projects = projectsRes.data || [];
     experience = experienceRes.data || [];
     education = educationRes.data || [];
+    certifications = certsRes.data || [];
     skills = skillsRes.data || [];
     socialLinks = linksRes.data || [];
   } catch (e) {
@@ -62,6 +66,7 @@ export default async function Home() {
         <GitHub />
         <Experience experience={experience} />
         <Education education={education} />
+        <Certifications certifications={certifications} />
         <About profile={profile} />
         <Contact socialLinks={socialLinks} email={profile?.email} />
       </main>

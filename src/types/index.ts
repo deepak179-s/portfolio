@@ -54,3 +54,14 @@ export interface SocialLink {
   icon: string | null;
   order_index: number;
 }
+
+export interface Certification {
+  id: string;
+  title: string;
+  issuer: string;
+  issue_date: string | null;
+  expiration_date: string | null;
+  credential_url: string | null;
+  logo_url: string | null;
+  order_index: number;
+}

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { supabase } from "@/utils/supabase"
-import { LayoutDashboard, User, Briefcase, GraduationCap, Code, Link as LinkIcon, LogOut, Settings } from "lucide-react"
+import { LayoutDashboard, User, Briefcase, GraduationCap, Code, Link as LinkIcon, LogOut, Settings, Award } from "lucide-react"
 
 import ProfileManager from "./components/ProfileManager"
 import ProjectsManager from "./components/ProjectsManager"
@@ -11,6 +11,7 @@ import ExperienceManager from "./components/ExperienceManager"
 import EducationManager from "./components/EducationManager"
 import SkillsManager from "./components/SkillsManager"
 import SocialLinksManager from "./components/SocialLinksManager"
+import CertificationsManager from "./components/CertificationsManager"
 
 export default function AdminDashboard() {
   const router = useRouter()
@@ -28,6 +29,7 @@ export default function AdminDashboard() {
     { id: "experience", label: "Experience", icon: Briefcase },
     { id: "education", label: "Education", icon: GraduationCap },
     { id: "skills", label: "Skills", icon: Code },
+    { id: "certifications", label: "Certifications", icon: Award },
     { id: "links", label: "Social Links", icon: LinkIcon },
   ]
 
@@ -86,8 +88,9 @@ export default function AdminDashboard() {
         {activeTab === "projects" && <ProjectsManager />}
         {activeTab === "experience" && <ExperienceManager />}
         {activeTab === "education" && <EducationManager />}
-        {activeTab === "skills" && <SkillsManager />}
-        {activeTab === "links" && <SocialLinksManager />}
+        { activeTab === "skills" && <SkillsManager />}
+        { activeTab === "certifications" && <CertificationsManager />}
+        { activeTab === "links" && <SocialLinksManager />}
       </div>
     </div>
   )
