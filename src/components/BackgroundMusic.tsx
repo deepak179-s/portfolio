@@ -26,7 +26,7 @@ export default function BackgroundMusic() {
       try {
         await audio.play();
         setIsPlaying(true);
-      } catch (error) {
+      } catch {
         // Autoplay prevented by browser. 
         // We will just stay paused until the user explicitly clicks the play button.
         setIsPlaying(false);
