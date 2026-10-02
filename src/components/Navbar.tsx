@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
-import BackgroundMusic from "./BackgroundMusic";
 
 const navLinks = [
     { name: "Work", href: "#experience" },
@@ -76,7 +75,6 @@ export default function Navbar() {
 
                     {/* Right side */}
                     <div className="flex items-center gap-3">
-                        <BackgroundMusic />
                         <ThemeToggle />
                         <button
                             onClick={() => setMobileOpen(!mobileOpen)}
