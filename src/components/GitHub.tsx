@@ -75,7 +75,7 @@ export default function GitHub() {
                                             <p className="text-lg text-text-secondary font-medium">AI / ML Engineer</p>
                                         </div>
                                     </div>
-                                    
+
                                     {/* Quick stats moved to top right */}
                                     <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
                                         <div className="text-center p-4 bg-background rounded-xl border border-border min-w-[120px]">
@@ -95,17 +95,17 @@ export default function GitHub() {
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 {/* Contribution Graph (Heatmap) - Now Full Width */}
                                 <div className="w-full overflow-hidden overflow-x-auto flex justify-center min-h-[150px] bg-background/50 p-6 rounded-xl border border-border">
                                     {mounted ? (
                                         <div className="min-w-max">
-                                            <GitHubCalendar 
-                                                username="deepak179-s" 
+                                            <GitHubCalendar
+                                                username="deepak179-s"
                                                 theme={githubTheme}
                                                 colorScheme="dark"
                                                 labels={{
-                                                    totalCount: '{{count}} contributions in the last year',
+                                                    totalCount: `${stats.contributions !== -1 ? stats.contributions : '{{count}}'} contributions in the last year`,
                                                 }}
                                                 blockSize={14}
                                                 blockMargin={5}
