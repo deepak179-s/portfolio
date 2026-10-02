@@ -54,23 +54,37 @@ export default async function Home() {
     console.error("Supabase connection error. Fallback to static UI if needed.", e);
   }
 
+  // Extract config
+  let showLeetCode = true;
+  let showGitHub = true;
+  let displaySocialLinks = [];
+
+  if (socialLinks && socialLinks.length > 0) {
+    displaySocialLinks = socialLinks.filter((link: any) => !link.platform.startsWith('config:'));
+    const lcConf = socialLinks.find((link: any) => link.platform === 'config:show_leetcode');
+    const ghConf = socialLinks.find((link: any) => link.platform === 'config:show_github');
+    
+    if (lcConf) showLeetCode = lcConf.url === 'true';
+    if (ghConf) showGitHub = ghConf.url === 'true';
+  }
+
   return (
     <>
       <Navbar />
       <main>
-        <Hero profile={profile} socialLinks={socialLinks} />
+        <Hero profile={profile} socialLinks={displaySocialLinks} />
         <SkillsHighlight />
         <Projects projects={projects} />
         <Skills skills={skills} />
-        <LeetCode />
-        <GitHub />
+        {showLeetCode && <LeetCode />}
+        {showGitHub && <GitHub />}
         <Experience experience={experience} />
         <Education education={education} />
         <Certifications certifications={certifications} />
         <About profile={profile} />
-        <Contact socialLinks={socialLinks} email={profile?.email} />
+        <Contact socialLinks={displaySocialLinks} email={profile?.email} />
       </main>
-      <Footer socialLinks={socialLinks} profile={profile} />
+      <Footer socialLinks={displaySocialLinks} profile={profile} />
     </>
   );
 }

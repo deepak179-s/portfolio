@@ -47,7 +47,7 @@ export default function GitHub() {
                     });
                 }
             } catch (error) {
-                console.error("Failed to fetch GitHub stats:", error);
+                console.warn("Failed to fetch GitHub stats:", error);
             }
         };
 

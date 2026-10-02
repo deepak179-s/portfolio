@@ -18,7 +18,9 @@ export default function SocialLinksManager() {
   const fetchLinks = async () => {
     setLoading(true);
     const { data } = await supabase.from('social_links').select('*').order('order_index', { ascending: true });
-    if (data) setLinks(data);
+    if (data) {
+      setLinks(data.filter((link: SocialLink) => !link.platform.startsWith('config:')));
+    }
     setLoading(false);
   };
 

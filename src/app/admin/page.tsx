@@ -12,6 +12,7 @@ import EducationManager from "./components/EducationManager"
 import SkillsManager from "./components/SkillsManager"
 import SocialLinksManager from "./components/SocialLinksManager"
 import CertificationsManager from "./components/CertificationsManager"
+import VisibilityManager from "./components/VisibilityManager"
 
 export default function AdminDashboard() {
   const router = useRouter()
@@ -31,6 +32,7 @@ export default function AdminDashboard() {
     { id: "skills", label: "Skills", icon: Code },
     { id: "certifications", label: "Certifications", icon: Award },
     { id: "links", label: "Social Links", icon: LinkIcon },
+    { id: "visibility", label: "Visibility Settings", icon: Settings },
   ]
 
   return (
@@ -91,6 +93,7 @@ export default function AdminDashboard() {
         { activeTab === "skills" && <SkillsManager />}
         { activeTab === "certifications" && <CertificationsManager />}
         { activeTab === "links" && <SocialLinksManager />}
+        { activeTab === "visibility" && <VisibilityManager />}
       </div>
     </div>
   )
