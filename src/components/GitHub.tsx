@@ -64,9 +64,9 @@ export default function GitHub() {
         fetchGitHubStats();
     }, []);
 
-    const greenTheme = {
-        light: ['#e8f5e9', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-        dark: ['#142e1d', '#0e4429', '#006d32', '#26a641', '#39d353'],
+    const githubTheme = {
+        light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+        dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
     };
 
     return (
@@ -96,56 +96,60 @@ export default function GitHub() {
                         <div className="h-1.5 bg-gradient-to-r from-gray-800 via-gray-600 to-gray-400 dark:from-gray-200 dark:via-gray-400 dark:to-gray-600" />
 
                         <div className="p-8 sm:p-10">
-                            <div className="flex flex-col md:flex-row justify-between items-center gap-10 mb-10">
-                                {/* Profile Info */}
-                                <div className="text-center md:text-left flex-shrink-0 flex flex-col items-center md:items-start gap-4">
-                                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-accent to-blue-400 flex items-center justify-center text-white text-3xl font-bold shadow-lg shadow-accent/20">
-                                        DS
+                            <div className="flex flex-col items-center gap-10 mb-10">
+                                {/* Profile Info and Stats Row */}
+                                <div className="w-full flex flex-col md:flex-row justify-between items-center gap-8">
+                                    <div className="flex-shrink-0 flex items-center gap-6">
+                                        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-accent to-blue-400 flex items-center justify-center text-white text-4xl font-bold shadow-lg shadow-accent/20">
+                                            DS
+                                        </div>
+                                        <div>
+                                            <h3 className="text-3xl font-bold text-text-primary mb-1">Deepak Kumar</h3>
+                                            <p className="text-lg text-text-secondary font-medium">AI / ML Engineer</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h3 className="text-3xl font-bold text-text-primary mb-1">Deepak Kumar</h3>
-                                        <p className="text-lg text-text-secondary font-medium">AI / ML Engineer</p>
+                                    
+                                    {/* Quick stats moved to top right */}
+                                    <div className="flex gap-4 w-full md:w-auto overflow-x-auto pb-2 md:pb-0">
+                                        <div className="text-center p-4 bg-background rounded-xl border border-border min-w-[120px]">
+                                            <Code2 className="w-5 h-5 text-accent mx-auto mb-2" />
+                                            <p className="text-xl font-bold text-text-primary">{stats.repos !== -1 ? stats.repos : "..."}</p>
+                                            <p className="text-xs text-text-secondary mt-1">Repositories</p>
+                                        </div>
+                                        <div className="text-center p-4 bg-background rounded-xl border border-border min-w-[120px]">
+                                            <Star className="w-5 h-5 text-yellow-500 mx-auto mb-2" />
+                                            <p className="text-xl font-bold text-text-primary">{stats.stars !== -1 ? stats.stars : "..."}</p>
+                                            <p className="text-xs text-text-secondary mt-1">Stars Earned</p>
+                                        </div>
+                                        <div className="text-center p-4 bg-background rounded-xl border border-border min-w-[120px]">
+                                            <GitFork className="w-5 h-5 text-green-500 mx-auto mb-2" />
+                                            <p className="text-xl font-bold text-text-primary">{stats.contributions !== -1 ? stats.contributions : "..."}</p>
+                                            <p className="text-xs text-text-secondary mt-1">Contributions</p>
+                                        </div>
                                     </div>
                                 </div>
                                 
-                                {/* Contribution Graph (Heatmap) */}
-                                <div className="w-full overflow-hidden overflow-x-auto flex flex-col items-center md:items-end justify-center md:justify-end min-h-[150px]">
+                                {/* Contribution Graph (Heatmap) - Now Full Width */}
+                                <div className="w-full overflow-hidden overflow-x-auto flex justify-center min-h-[150px] bg-background/50 p-6 rounded-xl border border-border">
                                     {mounted ? (
-                                        <GitHubCalendar 
-                                            username="deepak179-s" 
-                                            theme={greenTheme}
-                                            colorScheme="dark"
-                                            labels={{
-                                                totalCount: '{{count}} contributions in the last half year',
-                                            }}
-                                            blockSize={12}
-                                            blockMargin={4}
-                                            fontSize={12}
-                                        />
+                                        <div className="min-w-max">
+                                            <GitHubCalendar 
+                                                username="deepak179-s" 
+                                                theme={githubTheme}
+                                                colorScheme="dark"
+                                                labels={{
+                                                    totalCount: '{{count}} contributions in the last year',
+                                                }}
+                                                blockSize={14}
+                                                blockMargin={5}
+                                                fontSize={12}
+                                            />
+                                        </div>
                                     ) : (
                                         <div className="w-full h-full flex items-center justify-center min-h-[120px]">
-                                            <div className="w-full max-w-[600px] h-[120px] bg-border/20 rounded-md animate-pulse"></div>
+                                            <div className="w-full max-w-[800px] h-[120px] bg-border/20 rounded-md animate-pulse"></div>
                                         </div>
                                     )}
-                                </div>
-                            </div>
-
-                            {/* Quick stats */}
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-                                <div className="text-center p-4 bg-background rounded-xl border border-border hover:-translate-y-1 transition-transform">
-                                    <Code2 className="w-6 h-6 text-accent mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.repos !== -1 ? stats.repos : "..."}</p>
-                                    <p className="text-xs text-text-secondary mt-1">Repositories</p>
-                                </div>
-                                <div className="text-center p-4 bg-background rounded-xl border border-border hover:-translate-y-1 transition-transform">
-                                    <Star className="w-6 h-6 text-yellow-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.stars !== -1 ? stats.stars : "..."}</p>
-                                    <p className="text-xs text-text-secondary mt-1">Stars Earned</p>
-                                </div>
-                                <div className="text-center p-4 bg-background rounded-xl border border-border hover:-translate-y-1 transition-transform">
-                                    <GitFork className="w-6 h-6 text-green-500 mx-auto mb-2" />
-                                    <p className="text-2xl font-bold text-text-primary">{stats.contributions !== -1 ? stats.contributions : "..."}</p>
-                                    <p className="text-xs text-text-secondary mt-1">Contributions</p>
                                 </div>
                             </div>
 
