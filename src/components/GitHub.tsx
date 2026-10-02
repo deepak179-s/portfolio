@@ -13,52 +13,19 @@ export default function GitHub() {
         setMounted(true);
 
         const fetchGitHubStats = async () => {
-            const username = "deepak179-s";
-            let repos = 0;
-            let stars = 0;
-            let contributions = 0;
-
             try {
-                // Fetch basic user data (repos)
-                const userRes = await fetch(`https://api.github.com/users/${username}`);
-                if (userRes.ok) {
-                    const userData = await userRes.json();
-                    repos = userData.public_repos || 0;
+                const res = await fetch("/api/github");
+                if (res.ok) {
+                    const data = await res.json();
+                    setStats({
+                        repos: data.repos || 0,
+                        stars: data.stars || 0,
+                        contributions: data.contributions || 0
+                    });
                 }
             } catch (error) {
-                console.warn("Failed to fetch GitHub user:", error);
+                console.warn("Failed to fetch GitHub stats from API:", error);
             }
-
-            try {
-                // Fetch repositories (stars)
-                const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
-                if (reposRes.ok) {
-                    const reposData = await reposRes.json();
-                    if (Array.isArray(reposData)) {
-                        stars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-                    }
-                }
-            } catch (error) {
-                console.warn("Failed to fetch GitHub repos:", error);
-            }
-
-            try {
-                // Fetch contributions
-                // Using the exact API used by react-github-calendar to ensure sync
-                const contribRes = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
-                if (contribRes.ok) {
-                    const contribData = await contribRes.json();
-                    contributions = contribData?.total?.lastYear || contribData?.total || 0;
-                }
-            } catch (error) {
-                console.warn("Failed to fetch GitHub contributions:", error);
-            }
-
-            setStats({
-                repos,
-                stars,
-                contributions
-            });
         };
 
         fetchGitHubStats();
