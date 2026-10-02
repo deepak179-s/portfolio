@@ -44,8 +44,8 @@ export default function GitHub() {
 
             try {
                 // Fetch contributions
-                // Using a fallback API if deno one fails
-                const contribRes = await fetch(`https://github-contributions-api.jasonsturm.vercel.app/api?username=${username}`);
+                // Using the exact API used by react-github-calendar to ensure sync
+                const contribRes = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
                 if (contribRes.ok) {
                     const contribData = await contribRes.json();
                     contributions = contribData?.total?.lastYear || contribData?.total || 0;
