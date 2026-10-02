@@ -14,7 +14,7 @@ export default function BackgroundMusic() {
     // Initialize audio only once
     if (!audioRef.current) {
       const audio = new Audio("/sunflower.mp3");
-      audio.volume = 0.7; // 70% volume
+      audio.volume = 0.5; // 50% volume
       audio.loop = true;
       audioRef.current = audio;
     }
@@ -57,7 +57,7 @@ export default function BackgroundMusic() {
   return (
     <button
       onClick={togglePlay}
-      className="fixed bottom-6 left-6 z-50 p-3 rounded-full bg-card/80 backdrop-blur-xl border border-border shadow-lg hover:border-accent hover:shadow-[0_0_15px_rgba(var(--accent-color),0.2)] transition-all duration-300 group cursor-pointer"
+      className="p-2 rounded-xl bg-card border border-border hover:border-accent transition-all duration-300 hover:shadow-md cursor-pointer group"
       aria-label={isPlaying ? "Pause background music" : "Play background music"}
     >
       <div className="relative flex items-center justify-center">

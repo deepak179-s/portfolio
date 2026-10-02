@@ -4,7 +4,6 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 import { Toaster } from "react-hot-toast";
 import dynamic from "next/dynamic";
-import BackgroundMusic from "@/components/BackgroundMusic";
 import "./globals.css";
 
 const FloatingBackground = dynamic(() => import("@/components/FloatingBackground"));
@@ -49,7 +48,6 @@ export default function RootLayout({
           <FloatingBackground />
           <div className="relative z-10">{children}</div>
           <ScrollToTop />
-          <BackgroundMusic />
           <Toaster 
             position="bottom-right"
             toastOptions={{
