@@ -13,42 +13,52 @@ export default function GitHub() {
         setMounted(true);
 
         const fetchGitHubStats = async () => {
+            const username = "deepak179-s";
+            let repos = 0;
+            let stars = 0;
+            let contributions = 0;
+
             try {
-                const username = "deepak179-s";
-                
                 // Fetch basic user data (repos)
                 const userRes = await fetch(`https://api.github.com/users/${username}`);
-                const userData = await userRes.json();
-                
-                // Fetch repositories (stars)
-                const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
-                const reposData = await reposRes.json();
-                let totalStars = 0;
-                if (Array.isArray(reposData)) {
-                    totalStars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
-                }
-
-                // Fetch contributions
-                const contribRes = await fetch(`https://github-contributions-api.deno.dev/${username}.json`);
-                if (contribRes.ok) {
-                    const contribData = await contribRes.json();
-                    const totalContribs = contribData?.totalContributions || 0;
-                    
-                    setStats({
-                        repos: userData.public_repos || 0,
-                        stars: totalStars,
-                        contributions: totalContribs
-                    });
-                } else {
-                    setStats({
-                        repos: userData.public_repos || 0,
-                        stars: totalStars,
-                        contributions: 0
-                    });
+                if (userRes.ok) {
+                    const userData = await userRes.json();
+                    repos = userData.public_repos || 0;
                 }
             } catch (error) {
-                console.warn("Failed to fetch GitHub stats:", error);
+                console.warn("Failed to fetch GitHub user:", error);
             }
+
+            try {
+                // Fetch repositories (stars)
+                const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+                if (reposRes.ok) {
+                    const reposData = await reposRes.json();
+                    if (Array.isArray(reposData)) {
+                        stars = reposData.reduce((acc, repo) => acc + repo.stargazers_count, 0);
+                    }
+                }
+            } catch (error) {
+                console.warn("Failed to fetch GitHub repos:", error);
+            }
+
+            try {
+                // Fetch contributions
+                // Using a fallback API if deno one fails
+                const contribRes = await fetch(`https://github-contributions-api.jasonsturm.vercel.app/api?username=${username}`);
+                if (contribRes.ok) {
+                    const contribData = await contribRes.json();
+                    contributions = contribData?.total?.lastYear || contribData?.total || 0;
+                }
+            } catch (error) {
+                console.warn("Failed to fetch GitHub contributions:", error);
+            }
+
+            setStats({
+                repos,
+                stars,
+                contributions
+            });
         };
 
         fetchGitHubStats();
