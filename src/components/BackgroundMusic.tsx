@@ -6,6 +6,12 @@ import { Volume2, VolumeX } from "lucide-react";
 export default function BackgroundMusic() {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasPlayingRef = useRef(false); // Track intended state for visibility changes
+
+  // Sync ref with state
+  useEffect(() => {
+    wasPlayingRef.current = isPlaying;
+  }, [isPlaying]);
 
   useEffect(() => {
     // Check if Audio is available (browser environment)
@@ -35,7 +41,21 @@ export default function BackgroundMusic() {
 
     playAudio();
 
+    // Handle tab switching / minimizing
+    const handleVisibilityChange = () => {
+      if (!audioRef.current) return;
+      
+      if (document.hidden) {
+        audioRef.current.pause();
+      } else if (wasPlayingRef.current) {
+        audioRef.current.play().catch(() => {});
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
     return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       // Cleanup
       if (audio) {
         audio.pause();
